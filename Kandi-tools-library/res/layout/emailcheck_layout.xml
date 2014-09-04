@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/inapp_loginbackground"
+	android:padding="@dimen/activity_margin_large" >
+
+	<TextView
+		android:id="@+id/emailCheck_header"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/emailCheck_text_gotMail"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor = "@color/white" />
+
+	<TextView
+		android:id="@+id/textView1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/emailCheck_header"
+		android:layout_marginTop="@dimen/acc_margin_medium"
+		android:text="@string/emailCheck_text_pleaseCheck"
+		android:textAppearance="?android:attr/textAppearanceMedium" 
+		android:textColor = "@color/white"/>
+
+	<TextView
+		android:id="@+id/emailCheck_noEmail1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="@dimen/acc_margin_large"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/emailCheck_noEmail2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="@dimen/acc_margin_large"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<TextView
+		android:id="@+id/emailCheck_header2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="@dimen/acc_margin_large"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<Button
+		android:id="@+id/emailCheck_btn_cancel"
+		style="@style/Theme.MiKandi.Button.Transparent"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="@dimen/acc_margin_huge"
+		android:text="@string/emailCheck_btn_Cancel"
+		android:textColor="@color/white" />
+
+	<Button
+		android:id="@+id/emailCheck_bt_login"
+		style="@style/Theme.MiKandi.Button.Green.Account"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/emailCheck_btn_cancel"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="@dimen/acc_margin_large"
+		android:text="@string/emailCheck_btn_login" />
+
+</RelativeLayout>

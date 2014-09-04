@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="btn_link_tc">#101010</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="Red">#FF0000</color>
+    <color name="shadow">#80000000</color>
+    <color name="tab_title_background">#16a5d7</color>
+    <color name="overview_list_background">#cecece</color>
+    <color name="title_overlay_background">@color/shadow</color>
+    <color name="userwarning">#1cb4f8</color>
+    <color name="gray_shade">#40F0F0F0</color>
+    <color name ="grey_darker">#5B5A5A</color>
+    <color name="gray_shade_pressed">#60F0F0F0</color>
+    <color name="gray_shade_focused">#80F0F0F0</color>
+    <color name="grey_light">#dbdbdb</color>
+    <color name="grey_dark">#6c6c6c</color>  
+</resources>

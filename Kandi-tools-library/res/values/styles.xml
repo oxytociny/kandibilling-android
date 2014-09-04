@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<style name="Theme.MiKandi.Button" parent="android:style/Widget.Button">
+		<item name="android:background">@drawable/btn_grey</item>
+		<item name="android:textColor">@android:color/black</item>
+		<item name="android:paddingLeft">6dip</item>
+		<item name="android:paddingRight">8dip</item>
+		<item name="android:paddingBottom">8dip</item>
+		<item name="android:paddingTop">8dip</item>
+		<item name="android:textSize">14sp</item>
+	</style>
+	<style name="Theme.MiKandi.Button.Grey" parent="Theme.MiKandi.Button"></style>
+<!-- Resource is not a Drawable (color or path): TypedValue{t=0x1/d=0x7f0a0058 a=1 r=0x7f0a0058} -->
+
+	<style name="Theme.MiKandi.Button.Blue" parent="android:style/Widget.Button">
+		<item name="android:background">@drawable/btn_blue</item>
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:paddingLeft">6dip</item>
+		<item name="android:paddingRight">8dip</item>
+		<item name="android:paddingBottom">8dip</item>
+		<item name="android:paddingTop">8dip</item>
+		<item name="android:textSize">14sp</item>
+	</style>
+
+	<style name="Theme.MiKandi.Button.Green">
+		<item name="android:background">@drawable/btn_green</item>
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:paddingLeft">6dip</item>
+		<item name="android:paddingRight">8dip</item>
+		<item name="android:paddingBottom">8dip</item>
+		<item name="android:paddingTop">8dip</item>
+		<item name="android:textSize">14sp</item>
+	</style>
+
+	<style name="Theme.MiKandi.Button.Green.Account">
+		<item name="android:paddingTop">@dimen/acc_button_main_vertical_padding</item>
+		<item name="android:paddingBottom">@dimen/acc_button_main_vertical_padding</item>
+		<item name="android:paddingLeft">@dimen/acc_button_main_horizontal_padding</item>
+		<item name="android:paddingRight">@dimen/acc_button_main_horizontal_padding</item>
+		<item name="android:textSize">@dimen/acc_button_main_text_size</item>
+		<item name="android:textStyle">bold</item>
+	</style>	
+	<style name="Theme.MiKandi.Button.Blue.Large">
+		<item name="android:textSize">18sp</item>
+	</style>
+	<style name="Theme.MiKandi.Button.Grey.Large">
+		<item name="android:textSize">18sp</item>
+	</style>
+	<style name="Theme.MiKandi.Button.Green.Large">
+		<item name="android:textSize">18sp</item>
+	</style>
+	
+	<style name="Theme.MiKandi.Button.Transparent">
+		<item name="android:background">@drawable/btn_transparent_without_border</item>
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:paddingLeft">@dimen/acc_button_horizontal_padding</item>
+		<item name="android:paddingRight">@dimen/acc_button_horizontal_padding</item>
+		<item name="android:paddingBottom">@dimen/acc_button_vertical_padding</item>
+		<item name="android:paddingTop">@dimen/acc_button_vertical_padding</item>
+		<item name="android:textSize">@dimen/acc_button_text_size</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+				
+	<style name="Theme.MiKandi.Menu">
+		<item name="android:buttonStyle">@style/Theme.MiKandi.Menu.Button</item>
+	</style>
+
+	<style name="Theme.MiKandi.Menu.Title" parent="android:style/Widget.TextView">
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:clickable">true</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:gravity">center_vertical</item>
+	</style>
+
+	<style name="Theme.MiKandi.Menu.Button">
+		<item name="android:background">@drawable/btn_menu</item>
+	</style>
+
+	<style name="Theme.MiKandi.Separator">
+		<item name="android:background">@android:color/white</item>
+	</style>
+	<style name="Theme.MiKandi.Separator.Dark">
+		<item name="android:background">@android:color/darker_gray</item>
+	</style>
+	
+	<style name="Theme.MiKandi.Widget.ListView" parent="android:style/Widget.ListView">
+<!-- 		<item name="android:cacheColorHint">@android:color/white</item> -->
+<!-- 		<item name="android:background">@android:color/white</item> -->
+		<item name="android:cacheColorHint">@color/overview_list_background</item>
+		<item name="android:background">@color/overview_list_background</item>
+		<item name="android:listSelector">@android:color/transparent</item>
+		<item name="android:dividerHeight">0dip</item>
+		<item name="android:divider">@null</item>
+	</style>
+	<style name="Theme.MiKandi.Widget.ListView.Light">
+		<item name="android:cacheColorHint">@android:color/white</item>
+		<item name="android:background">@android:color/white</item>
+	</style>
+	
+	<style name="Theme.MiKandi.Details">
+		<item name="android:background">@android:color/background_light</item>
+		<item name="android:textViewStyle">@style/Theme.MiKandi.Details.TextView</item>
+	</style>
+<!--	<style name="Theme.MiKandi.Details.BuyGold">-->
+<!--		<item name="android:textViewStyle">@style/Theme.MiKandi.Link.BuyGold</item>-->
+<!--		<item name="android:listViewStyle">@style/Theme.MiKandi.Widget.ListView.Light.BuyGold</item>-->
+<!--	</style>-->
+<!--	<style name="Theme.MiKandi.Details.BuyGold.Item">-->
+<!--		<item name="android:textViewStyle">@style/Theme.MiKandi.Link.BuyGold.Item</item>-->
+<!--	</style>-->
+		
+	<style name="Theme.MiKandi.Details.TextView" parent="android:style/Widget.TextView">
+		<item name="android:textColor">@android:color/black</item>
+	</style>
+
+	<style name="Theme.MiKandi.Details.TextView.Title">
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">20sp</item>
+		<item name="android:gravity">top|left</item>
+		<item name="android:drawablePadding">8dip</item>
+		
+<!--		<item name="android:drawableLeft">?attr/details_icon</item>-->
+	</style>
+
+	<style name="Theme.MiKandi.Details.TextView.Separator">
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@color/tab_title_background</item>
+	</style>
+
+	<style name="Theme.MiKandi.Details.ImageView">
+		<item name="android:scaleType">fitCenter</item>
+		<item name="android:minHeight">@dimen/min_details_image_size</item>
+		<item name="android:minWidth">@dimen/min_details_image_size</item>
+	</style>
+	
+	<style name="TextAppearance.MiKandi.DialogWindowTitle" parent="android:style/Widget.TextView">
+	    <item name="android:textSize">22sp</item>
+	    <item name="android:textColor">@color/btn_blue_default</item>
+	</style>
+
+	<style name="Theme.MiKandi.Dialog" parent="android:Theme.Dialog">
+	    <item name="android:windowFrame">@null</item>		
+		<item name="android:windowIsFloating">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+		<item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+		
+<!-- 		<item name="android:windowActionBar">false</item> -->
+<!-- 		<item name="android:windowActionModeOverlay">true</item> -->
+<!-- 		<item name="android:windowCloseOnTouchOutside">true</item>Do we really want to do it this way? -->
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:backgroundDimEnabled">true</item><!-- ? Added by us -->
+		<item name="android:backgroundDimAmount">0.6</item>
+		
+		<item name="android:colorBackgroundCacheHint">@null</item>
+
+		<!--  It seems we don't need these? At any rate, ABS didn't use them
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowIsFloating">true</item>
+		-->
+		
+		<item name="android:textColorPrimary">#ff000000</item>
+		<item name="android:textColorPrimaryInverse">#ff000000</item>
+
+	</style>
+	
+
+
+<!-- 
+	<style name="Theme.MiKandi.RatingBar.Tiny" parent="@android:style/Widget.RatingBar">
+	    <item name="android:progressDrawable">@drawable/ratingbar_tiny</item>
+	    <item name="android:minHeight">@dimen/reviews_ratingbar_size_tiny</item>
+	    <item name="android:maxHeight">@dimen/reviews_ratingbar_size_tiny</item>
+    </style>
+		<style name="Theme.MiKandi.RatingBar.Small.Overlaid">
+		<item name="android:background">@color/title_overlay_background</item>
+    </style>
+		<style name="Theme.MiKandi.RatingBar.Large" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/ratingbar_large</item>
+	    <item name="android:minHeight">@dimen/reviews_ratingbar_size_large</item>
+	    <item name="android:maxHeight">@dimen/reviews_ratingbar_size_large</item>
+    </style>
+			
+	 -->
+<!-- 	<style name="style_greenbtn_layout" parent="@style/Theme.MiKandi.Button.Green"> -->
+<!-- 		<item name="android:layout_marginLeft">6dp</item> -->
+<!-- 		<item name="android:textSize">20sp</item> -->
+<!-- 	</style> -->
+	<style name="style_greybtn_layout" parent="@style/Theme.MiKandi.Button.Grey">
+		<item name="android:layout_marginRight">6dp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="android:textSize">18sp</item>
+	</style>
+</resources>

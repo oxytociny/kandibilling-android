@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    	<style name="Theme.MiKandi" parent = "android:Theme.Light"> <!-- android:Theme | android:Theme.Light | Theme.Sherlock.Light.ForceOverflow-->
+		<item name="android:buttonStyle">@style/Theme.MiKandi.Button</item>
+		<item name="android:listViewStyle">@style/Theme.MiKandi.Widget.ListView</item>
+		</style>
+
+
+	<style name="Theme.Player" parent="android:Theme">
+	    <item name="android:windowFullscreen">true</item>
+	    <item name="android:windowNoTitle">true</item>
+	</style>
+</resources>

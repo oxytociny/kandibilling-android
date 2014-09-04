@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="details_fragment_container" />
+	<item type="id" name="ab_menu_item_search" />
+	<item type="id" name="ab_menu_item_logout" />
+	<item type="id" name="ab_menu_item_pendingapps" />
+	<item type="id" name="ab_menu_item_messages" />
+</resources>

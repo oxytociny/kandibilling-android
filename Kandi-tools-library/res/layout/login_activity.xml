@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/inapp_loginbackground"
+	android:padding="@dimen/activity_margin_large" >
+
+	<TextView
+		android:id="@+id/login_textview_welcomeBanner"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/acc_margin_small"
+		android:layout_alignParentTop="true"
+		android:text="@string/login_string_header"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor = "@color/white" />
+
+	<TextView
+		android:id="@+id/login_textview_userwelcome"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/login_textview_welcomeBanner"
+		android:layout_marginTop="@dimen/acc_margin_small"
+		android:paddingBottom="@dimen/acc_item_padding"
+		android:text="@string/login_inapp_welcomeMessage"
+		android:textAppearance="?android:attr/textAppearanceMedium" 
+		android:textColor = "@color/white" />
+
+	<TextView
+		android:id="@+id/login_username_prompt_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/login_textview_userwelcome"
+		android:paddingBottom="@dimen/acc_item_padding"
+		android:text="@string/login_username_prompt"
+		android:textColor="@color/white"
+		android:color="@color/white" />
+
+	<EditText
+		android:id="@+id/Login_usernameField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/login_username_prompt_text"
+		android:background="@color/white"
+		android:padding="@dimen/acc_et_padding"
+		android:textColor="@color/black"
+		android:inputType="text"/>
+
+	<TextView
+		android:id="@+id/login_password_prompt_text"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/Login_usernameField"
+		android:layout_marginTop="@dimen/acc_margin_medium"
+		android:paddingBottom="@dimen/acc_item_padding"
+		android:text="@string/login_password_promt"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white"
+		android:textStyle="normal"
+		android:color="@color/white" />
+
+	<EditText
+		android:id="@+id/PasswordField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/login_password_prompt_text"
+		android:background="@color/white"
+		android:inputType="textPassword"
+		android:padding="@dimen/acc_et_padding"
+		android:textColor="@color/black" />
+
+	<Button
+	    android:id="@+id/login_btn_login"
+	    style="@style/Theme.MiKandi.Button.Green.Account"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignRight="@+id/PasswordField"
+	    android:layout_below="@+id/PasswordField"
+	    android:layout_marginTop="45dp"
+	    android:layout_toRightOf="@+id/login_textview_welcomeBanner"
+	    android:gravity="center_vertical|center_horizontal"
+	    android:padding="8dp"
+	    android:paddingLeft="35dp"
+	    android:paddingRight="35dp"
+	    android:text="@string/login_btn_loginbtn"
+	    android:textStyle="bold" />
+
+	<Button
+	    android:id="@+id/login_btn_forgot"
+	    style="@style/Theme.MiKandi.Button.Transparent"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/login_btn_login"
+	    android:layout_alignBottom="@+id/login_btn_login"
+	    android:layout_alignLeft="@+id/PasswordField"
+	    android:background="@drawable/btn_transparent_without_border"
+	    android:text="@string/login_string_forgotbtn"
+	    android:textSize="14sp" />
+
+</RelativeLayout>
