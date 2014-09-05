@@ -141,6 +141,8 @@ public class KandiLibs extends Activity {
 	 * @param loginListener
 	 */
 	public static final void requestLogin(final Activity act, UserInfoObject uio) {
+		
+		
 		Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
 		
 		String mSecret = uio.fromAppDetails(sSecret);
@@ -296,23 +298,18 @@ public class KandiLibs extends Activity {
 		if (lr == null) {
 			if (debug) Log.e("authInAppPurchase " , "error! login result is null");
 			Log.e("In-App purchase Error" , "User not logged in ! ");
+			
 			return;
 			}
 	try {
 		
 		// need to start the task here
-		final int userId = lr.getUserId();
-		final String userAuth = lr.getUserAuthHash();
-		final String userAuthExpires = lr.getUserAuthExpires();
-		final String appId = appDetails.get(sAppId);
-		final String secretKey =  appDetails.get(sSecret);
-
 		HashMap<String, String> args = new HashMap<String, String>();
-		args.put(AAppReturnable.APP_ID, appId);
-		args.put(AAppReturnable.APP_SECRET, secretKey);
-		args.put(AAppReturnable.USER_ID, String.valueOf(userId));
-		args.put(AAppReturnable.AUTH_HASH, userAuth);
-		args.put(AAppReturnable.AUTH_EXPIRES, userAuthExpires);
+		args.put(AAppReturnable.APP_ID, uio.getAppId());
+		args.put(AAppReturnable.APP_SECRET, uio.getSecretKey());
+		args.put(AAppReturnable.USER_ID, lr.getUserIdString());
+		args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
+		args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
 		args.put(AAppReturnable.DESCRIPTION	,mDescription.trim().toLowerCase(Locale.getDefault()));
 		args.put(AAppReturnable.TOKEN, mToken.trim().toLowerCase(Locale.getDefault()));
 		args.put(AAppReturnable.AMOUNT, mAmount.trim().toLowerCase(Locale.getDefault()));
@@ -365,15 +362,20 @@ public class KandiLibs extends Activity {
 	 */
 	public static boolean checkPurchase(final UserInfoObject uio, final String token){
 		setOwned(false);
-		
+		if (uio.getLoginResult() == null){
+			if (debug) Log.e("CheckPurchase library call" , "User needs to be logged in.");
+			Toast.makeText(uio.getContext(), "You need to log in first!" , Toast.LENGTH_LONG).show();
+			return false;
+		}
 		if (uio.getLoginResult() != null){
 			LoginResult lr = uio.getLoginResult();
+			
 			if (lr.getArrayListTokens().contains(token)){
 				setOwned(true);
 				return getOwned();
 		}
 		else {
-			if (debug) Log.i("checking token ", "none from lr");
+			if (debug) Log.i("checking token", "none from lr");
 			}
 		}
 		
@@ -416,36 +418,29 @@ public class KandiLibs extends Activity {
 	public static void requestPurchaseHistory(final UserInfoObject uio ,final onPurchaseHistoryListener purchaseHistoryListener) {
 		
 		if (debug) Log.i("KandiLibs - RequestPurchaseHistory","method called");
+		
 		final Context context = uio.getContext();
 		LoginResult lr = uio.getLoginResult();
-		HashMap<String,String> appDetails = uio.getAppDetails();
 		sPurchaseHistory = purchaseHistoryListener;
 		
 		if (lr == null) {
 			if (debug) Log.e("RequestPurchase History " , "error! login result is null");
-			Toast.makeText(context, "Request purchase History", Toast.LENGTH_LONG).show();
+			Toast.makeText(uio.getContext(), "Request purchase History", Toast.LENGTH_LONG).show();
 			return;
 		}
 		else {
 			if (debug) Log.i("KandiLibs - RequestPurchaseHistory","Instantiating variables ");
-				final int userId = lr.getUserId();
-				final String userAuth = lr.getUserAuthHash();
-				final String userAuthExpires = lr.getUserAuthExpires();
-				final String appId = appDetails.get(sAppId);
-				final String secretKey = appDetails.get(sSecret);
-
 				HashMap<String, String> args = new HashMap<String, String>();
-				args.put(AAppReturnable.APP_ID, appId);
-				args.put(AAppReturnable.APP_SECRET, secretKey);
-				args.put(AAppReturnable.USER_ID, String.valueOf(userId));
-				args.put(AAppReturnable.AUTH_HASH, userAuth);
-				args.put(AAppReturnable.AUTH_EXPIRES, userAuthExpires);
-				
+				args.put(AAppReturnable.APP_ID, uio.getAppId());
+				args.put(AAppReturnable.APP_SECRET, uio.getSecretKey());
+				args.put(AAppReturnable.USER_ID, lr.getUserIdString());
+				args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
+				args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
 		try {
 			new DefaultJSONAsyncTask<ListPurchasesReturnable>(
 			ListPurchasesReturnable.class,
 			context,
-	new OnJSONResponseLoadedListener<ListPurchasesReturnable>() {
+			new OnJSONResponseLoadedListener<ListPurchasesReturnable>() {
 
 		@Override
 		public void onJSONLoaded(
@@ -585,14 +580,5 @@ public class KandiLibs extends Activity {
 	private static  boolean getOwned() { 
 		return ownedBoolean;
 	}
-	// -------------------------------------------------End Random Functions ---------------------------	
-	private static int getClassBalance(){ 
-		return mBalance;
-	}
-	 
-	private static void setBalance(int userBalance) { 
-		mBalance = userBalance;
-	}
-	
-	
+	// -------------------------------------------------End Random Functions ---------------------------		
 }
