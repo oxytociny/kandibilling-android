@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.LoginResult;
 import tools.mikandi.dev.login.LoginStorageUtils;
 
@@ -93,16 +94,20 @@ public class UserInfoObject {
 		myLogin = lr;
 	}
 
-	public String toString() { 
+	public String toString() {
 		StringBuilder sb = new StringBuilder("printing UIO : ");
-		
+
 		if (myLogin == null) {
-		sb.append("LoginResult is null");
+			sb.append("LoginResult is null");
+
 		} else {
-		sb.append("LoginResult is : ").append(myLogin.toString());
-			}
-		sb.append("HashMap Vals - appid: ").append( myHashMap.get("appid"));
-		sb.append("HashMap Vals - secretkey: ").append( myHashMap.get("secretkey"));
+			sb.append("LoginResult is : ").append(myLogin.toString());
+		}
+
+		sb.append("HashMap Vals - appid: ").append(
+				myHashMap.get(KandiLibs.sAppId));
+		sb.append("HashMap Vals - secretkey: ").append(
+				myHashMap.get(KandiLibs.sSecret));
 		return sb.toString();
 	}
 	
@@ -110,14 +115,26 @@ public class UserInfoObject {
 		if (UserInfoObject.myLogin != null) { 
 			return UserInfoObject.myLogin;
 		}
-	else return null;
+	else {
+		if (Logger.isDebug) Log.e("UserInfoObject error", "Can't return login result, it is null");
+		return null;
+		}
 	}
 	
 	public HashMap<String, String> getAppDetails() {
 		return UserInfoObject.myHashMap;
 	}
+	
+	
+	public String getAppId(){
+		return fromAppDetails(KandiLibs.sAppId);
+	}
 	 
+	public String getSecretKey() { 
+		return fromAppDetails(KandiLibs.sSecret);
+	}
+	
 	public String fromAppDetails(String param) { 
-		return UserInfoObject.myHashMap.get(param.toString());
+		return UserInfoObject.myHashMap.get(param);
 	}
 }

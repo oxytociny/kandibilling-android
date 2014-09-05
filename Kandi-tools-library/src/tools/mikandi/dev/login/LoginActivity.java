@@ -23,8 +23,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.passreset.PasswordResetActivity;
-import tools.mikandi.tools.KandiLibs;
 
 
 //Mike Docherty 3/2014

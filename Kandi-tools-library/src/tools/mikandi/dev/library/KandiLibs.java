@@ -1,9 +1,10 @@
-package tools.mikandi.tools;
+package tools.mikandi.dev.library;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import com.saguarodigital.returnable.defaultimpl.JSONResponse;
 
@@ -13,10 +14,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import tools.mikandi.dev.inapp.AccountBalancePoint;
 import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
 import tools.mikandi.dev.inapp.ValidateUserReturnable;
+import tools.mikandi.dev.inapp.onBalanceRetreiveListener;
 import tools.mikandi.dev.inapp.onPurchaseHistoryListener;
 import tools.mikandi.dev.inapp.onUserVerificationListener;
 import tools.mikandi.dev.login.AAppReturnable;
@@ -56,6 +59,11 @@ public class KandiLibs extends Activity {
 	public static final String ACTION_REGISTER = "registration";
 	public static final String ACTION_BUYGOLD = "buy-gold";
 
+	public static final String sAppId = "appid";
+	public static final String sSecret = "secretkey";
+	
+	private static int mBalance = -2;
+	
 	public static final boolean debug = true;
 	public static final boolean balanceDebug = true;
 
@@ -63,9 +71,10 @@ public class KandiLibs extends Activity {
 	private static OnValidationListener sValidate = null;
 	private static onUserVerificationListener sOnUserVerification = null;
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
+	private static onBalanceRetreiveListener sBalanceListener = null;
 	public static final int GRABTOKENS_FROMDEVICE = 0x300;
 	public static final int GRABTOKENS_FROMSERVER = 0x301;
-	public static final boolean mikeLibsBoolean = true;
+	public static final boolean libsBoolean = true;
 	public static final int RESULT_BAILEDLOGIN = 26; 
 	public static boolean ownedBoolean = false;
 	
@@ -120,7 +129,8 @@ public class KandiLibs extends Activity {
 		act.startActivity(mIntent);
 	
 	}
-	// -------------------------------------------------------- Buy Gold Activity End --------------------------------------------------------------
+
+	// -------------------------------------------------------- Buy Gold Activity End  --------------------------------------------------------------
 
 	// ------------------------------------------------------Login Activity----------------------------------------------------------------------------------
 	/**
@@ -133,23 +143,25 @@ public class KandiLibs extends Activity {
 	public static final void requestLogin(final Activity act, UserInfoObject uio) {
 		Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
 		
-		String mSecret = uio.fromAppDetails("secretkey");
-		String mAppId = uio.fromAppDetails("appid");
+		String mSecret = uio.fromAppDetails(sSecret);
+		String mAppId = uio.fromAppDetails(sAppId);
 
 		Log.i("DEBUGGING XML ERROR: " , "Secret key  " + mSecret  + " and appid " + mAppId);
 		
 		Intent mIntent = new Intent(act, LoginActivity.class);
 		Log.i("DEBUGGING XML ERROR: " , "Login Intent created");
 		
-		mIntent.putExtra("secretkey", mSecret);
-		mIntent.putExtra("appid", mAppId);
+		mIntent.putExtra(sSecret, mSecret);
+		mIntent.putExtra(sAppId, mAppId);
 		Log.i("DEBUGGING XML ERROR: " , "starting login activity");
 		
 		act.startActivity(mIntent);
 	
 	}
 	// ---------------------------------------------- Login Activity End----------------------------------------------------------------------------
-
+	// ---------------------------------------------- Purchase checking ------------------------
+	
+	// ----------------------------------------- End balance  -----------------------------------------
 	//----------------------------------------- Logout --------------------------------------------------------------------------------------
 	/** Function call to log user out of Mikandi and wipe the loginresults 
 	 *  from the UserInfoObject.
@@ -191,14 +203,13 @@ public class KandiLibs extends Activity {
 			return; 
 		}
 		try {
-		
 			// need to start the task here
 			int userId = lr.getUserId();
 			final String userAuth = lr.getUserAuthHash();
 			final String userAuthExpires = lr.getUserAuthExpires();
-			final String appId = appDetails.get("appid");
+			final String appId = appDetails.get(sAppId);
 			if (debug) Log.i("appid is ", ""+ appId);
-			final String secretKey = appDetails.get("secretkey");
+			final String secretKey = appDetails.get(sSecret);
 			if (debug) Log.i("secret key is ", "" + secretKey);
 			
 			HashMap<String, String> args = new HashMap<String, String>();
@@ -293,8 +304,8 @@ public class KandiLibs extends Activity {
 		final int userId = lr.getUserId();
 		final String userAuth = lr.getUserAuthHash();
 		final String userAuthExpires = lr.getUserAuthExpires();
-		final String appId = appDetails.get("appid");
-		final String secretKey =  appDetails.get("secretkey");
+		final String appId = appDetails.get(sAppId);
+		final String secretKey =  appDetails.get(sSecret);
 
 		HashMap<String, String> args = new HashMap<String, String>();
 		args.put(AAppReturnable.APP_ID, appId);
@@ -342,7 +353,8 @@ public class KandiLibs extends Activity {
 	}
 	// ------------------------------------ ENd in app Purchase Authorization ------------------------------------------------------
 
-	// ------------------------------------------ Purchase History--------------------------------------------------------------------------------------
+	// ------------------------------------------ Purchase History --------------------------------------------------------------------------------------
+	
 	/**
 	 * This is a function that returns a boolean value representing wheather or not the given token has been purchased by the current 
 	 * user. This is the easier and quickest way to check to see if a user has purchased user content! 
@@ -352,10 +364,11 @@ public class KandiLibs extends Activity {
 	 * @return
 	 */
 	public static boolean checkPurchase(final UserInfoObject uio, final String token){
-		LoginResult lr = uio.getLoginResult();
 		setOwned(false);
-		if (lr != null){
-		if (lr.getArrayListTokens().contains(token)){
+		
+		if (uio.getLoginResult() != null){
+			LoginResult lr = uio.getLoginResult();
+			if (lr.getArrayListTokens().contains(token)){
 				setOwned(true);
 				return getOwned();
 		}
@@ -418,8 +431,8 @@ public class KandiLibs extends Activity {
 				final int userId = lr.getUserId();
 				final String userAuth = lr.getUserAuthHash();
 				final String userAuthExpires = lr.getUserAuthExpires();
-				final String appId = appDetails.get("appid");
-				final String secretKey = appDetails.get("secretkey");
+				final String appId = appDetails.get(sAppId);
+				final String secretKey = appDetails.get(sSecret);
 
 				HashMap<String, String> args = new HashMap<String, String>();
 				args.put(AAppReturnable.APP_ID, appId);
@@ -505,8 +518,8 @@ public class KandiLibs extends Activity {
 		
 		final int mUserId = lr.getUserId();
 		final String mAuthHash = lr.getUserAuthHash();
-		final String mAppId = devDetails.get("appid");
-		final String mSecretKey = devDetails.get("secretkey");
+		final String mAppId = devDetails.get(sAppId);
+		final String mSecretKey = devDetails.get(sSecret);
 		final HashMap<String, String> hm = new HashMap<String, String>();
 		
 		hm.put(AAppReturnable.USER_ID, "" + mUserId);
@@ -569,8 +582,17 @@ public class KandiLibs extends Activity {
 	private static void setOwned(boolean var) { 
 		ownedBoolean = var;
 	}
-	public static  boolean getOwned() { 
+	private static  boolean getOwned() { 
 		return ownedBoolean;
 	}
-	// -------------------------------------------------End Random Functions ---------------------------		
+	// -------------------------------------------------End Random Functions ---------------------------	
+	private static int getClassBalance(){ 
+		return mBalance;
+	}
+	 
+	private static void setBalance(int userBalance) { 
+		mBalance = userBalance;
+	}
+	
+	
 }
