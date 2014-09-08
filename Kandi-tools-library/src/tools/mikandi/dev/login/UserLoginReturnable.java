@@ -33,6 +33,10 @@ public class UserLoginReturnable extends AAppReturnable {
 	@Field(type = Field.Type.LIST, json_name = "apps")
 	protected List<String> mTokens;
 
+	@Field(type = Field.Type.LIST, json_name = "purchases")
+	protected List<String> mPurchases;
+	
+	
 	@Field(type = Field.Type.TEXT, json_name = "first_name", constraint = Field.Constraint.NONE)
 	protected String mFirstName;
 
@@ -120,7 +124,4 @@ public class UserLoginReturnable extends AAppReturnable {
 		return new EmptyCache<UserLoginReturnable>();
 	}
 
-	
-	
-	
 }

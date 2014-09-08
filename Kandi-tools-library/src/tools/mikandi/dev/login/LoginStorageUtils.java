@@ -32,7 +32,8 @@ public final class LoginStorageUtils {
 	}
 
 	public static void setLogin(Context ctx, final LoginResult lr) {
-		final SharedPreferences.Editor ed = ctx.getSharedPreferences(sName, 0).edit();
+		final SharedPreferences.Editor ed = ctx.getSharedPreferences(sName, 0)
+				.edit();
 		ed.putBoolean(sLogin, true);
 		ed.putInt(sUid, lr.mUserId);
 		ed.putString(sUAExpires, lr.getUserAuthExpires());
@@ -64,5 +65,55 @@ public final class LoginStorageUtils {
 				sUid, -1), tokens, sp.getString(sUAHash, null), sp.getString(
 				sUAExpires, null), sp.getString(sUADisplayName, "MiKandi User"));
 	}
-	
+
+	public static boolean containsAnyTokens(Context ctx) {
+		final LoginResult tempLogin = getLogin(ctx);
+		if (tempLogin.getTokens().length > 0) {
+			return true;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * for use when a new loginResult is returned from server.
+	 * 
+	 * @param ctx
+	 * @param newestLr
+	 */
+	public static void updateTokens(Context ctx, LoginResult newestLr) {
+		if (containsAnyTokens(ctx)) {
+			final LoginResult tempLogin = LoginStorageUtils.getLogin(ctx);
+			// swaps loginresult for newer one.
+			if (newestLr.getTokens().length > tempLogin.getTokens().length) {
+				LoginStorageUtils.setLogin(ctx, newestLr);
+			}
+
+		}
+	}
+
+	/**
+	 * this is a function to force refresh tokens in loginResult
+	 * 
+	 */
+	public static void refreshToken(Context ctx, String[] newTokens) {
+		final LoginResult currentLR = LoginStorageUtils.getLogin(ctx);
+		String[] currentLRTokens = currentLR.getTokens();
+
+		for (String s : newTokens) {
+			if (!containString(currentLRTokens, s)) {
+				currentLR.addToTokens(s);
+			}
+		}
+		LoginStorageUtils.setLogin(ctx, currentLR);
+	}
+
+	public static boolean containString(String[] stringArray, String s) {
+		for (int i = 0; i < stringArray.length; i++) {
+			if (stringArray[i].equalsIgnoreCase(s))
+				return true;
+		}
+		return false;
+	}
+
 }

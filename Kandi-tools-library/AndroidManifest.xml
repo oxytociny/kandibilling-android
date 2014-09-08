@@ -7,9 +7,11 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
+	
 	<!--  get accounts needed to retreive email address for the registration, if registration  
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	-->
+   
     <uses-permission android:name="android.permission.INTERNET" />
     
     <application

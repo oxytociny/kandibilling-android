@@ -47,8 +47,15 @@ public class LoginSession implements IReturnable {
 	@Field(type = Field.Type.LIST) 
 	protected List<String> mPurchases;
 	
+	@Field(type = Field.Type.TEXT)
+	protected String mUsername;
+	
+	public String getUsername(){
+		return this.mUsername;
+	}
+	
 	public List<String> getPurchases() { 
-		return mPurchases;
+		return this.mPurchases;
 	}
 	
 	public boolean isValid() {
@@ -67,10 +74,9 @@ public class LoginSession implements IReturnable {
 		return this.mApps;
 	}
 
-
 	@Override
 	public IParser<? extends IReturnable> getParser() {
-		return new AutoParser<LoginSession>();
+		return new LoginSessionParser();
 	}
 
 	private static final char[] sHexChars = { '0', '1', '2', '3', '4', '5',
@@ -93,7 +99,7 @@ public class LoginSession implements IReturnable {
 		md.update(args.get("password").getBytes());
 		sb.append("&password_md5=");
 		final byte[] hashBytes = md.digest();
-		;
+		
 		for (final Byte b : hashBytes) {
 			sb.append(sHexChars[(b & 0xF0) >> 4]).append(sHexChars[b & 0x0F]);
 		}
@@ -118,15 +124,20 @@ class LoginSessionParser implements IParser<LoginSession> {
 		LoginSession obj = (LoginSession) empty;
 		if (PARSER) Log.i("parser debugging", "Parsing " + empty.getClass().getSimpleName());
 		try {
-
+			
 			obj.mSessionId = p.requireString("user_auth_hash");
 			obj.mUserId = p.requireInteger("user_id");
 			obj.mExpires = p.loadLong("user_auth_expires_time", 0);
-			obj.mBalance = p.loadInteger("point_balence", -1);
+			obj.mBalance = p.loadInteger("point_balance", -1);
 			obj.mEmail = p.loadString("email", "no-email");
+			
 			if (jo.has("apps")) {
 				obj.mApps = p.loadIntegerList("apps", null);
 			}
+			if (jo.has("purchases")){
+				obj.mPurchases = p.loadStringList("purchases", null);
+			}
+			
 		} catch (Exception e) {
 			ret = false;
 			if (PARSER)

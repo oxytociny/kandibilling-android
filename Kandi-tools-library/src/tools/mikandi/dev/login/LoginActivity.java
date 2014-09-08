@@ -9,6 +9,7 @@ import com.mikandi.developertools.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.passreset.PasswordResetActivity;
+import tools.mikandi.dev.utils.UserInfoObject;
+
 
 
 //Mike Docherty 3/2014
@@ -171,6 +174,8 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	 */
 	public void onLoginSuccess(LoginResult result) {
 		dismissDialog();
+		final Context context = getApplicationContext();
+		LoginStorageUtils.setLogin(context, result);
 		final Intent loginResultIntent = new Intent();
 		loginResultIntent.setAction(KandiLibs.ACTION_LOGIN);
 		loginResultIntent.putExtra(KandiLibs.ACTION_LOGIN, result);
@@ -246,7 +251,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	// checks username is appropriate, by checking chars, and length
 	private String usernameCleanup(String username) {
 		this.usernameClean = username;
-
 		usernameClean.trim();
 
 		char[] usernameCharArray = usernameClean.toCharArray();
@@ -257,7 +261,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 
 		String usernameCleaned = new String(usernameCharArray);
 		return usernameCleaned;
-
 	}
 
 	private void dismissDialog() {
@@ -277,7 +280,7 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	// Check given String against Username regex
 	private boolean checkUsernameAgainstPattern(String username) {
 
-		final String USERNAME_PATTERN = "[a-z0-9._-]{5,}";
+		final String USERNAME_PATTERN = "[a-zA-Z0-9._-]{5,}";
 		Pattern pattern = null;
 		Matcher matcher = null;
 

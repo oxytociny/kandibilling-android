@@ -144,8 +144,8 @@ public class KandiLibs extends Activity {
 		
 		Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
  
-		String mSecret = uio.fromAppDetails(sSecret);
-		String mAppId = uio.fromAppDetails(sAppId);
+		String mSecret = uio.getSecretKey();
+		String mAppId = uio.getAppId();
 
 		Log.i("DEBUGGING XML ERROR: " , "Secret key  " + mSecret  + " and appid " + mAppId);
 		
@@ -171,7 +171,6 @@ public class KandiLibs extends Activity {
 	public static final void logOutUser(UserInfoObject uio) { 
 			Context mContext = uio.getContext();
 			LoginStorageUtils.clear(mContext);
-			uio.setLoginResult(null);
 		}
 	// ---------------------------------------------- End Log out user ----------------------------------------------------------------------
 	public static final boolean isLoggedIn(UserInfoObject uio) { 
@@ -207,8 +206,8 @@ public class KandiLibs extends Activity {
 		try {
 			// need to start the task here
 			HashMap<String, String> args = new HashMap<String, String>();
-			args.put(AAppReturnable.APP_ID, appDetails.get(sAppId));
-			args.put(AAppReturnable.APP_SECRET, appDetails.get(sSecret));
+			args.put(AAppReturnable.APP_ID, uio.getAppId());
+			args.put(AAppReturnable.APP_SECRET, uio.getSecretKey());
 			args.put(AAppReturnable.USER_ID, lr.getUserIdString());
 			args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
 			args.put(AAppReturnable.TOKEN, mToken);
@@ -352,6 +351,7 @@ public class KandiLibs extends Activity {
 	 * @return
 	 */
 	public static boolean checkPurchase(final UserInfoObject uio, final String token){
+		//have to set owned because boolean can be changes in the onPurchaseHistoryListener()
 		setOwned(false);
 		
 		if (uio.getLoginResult() == null){
@@ -417,7 +417,7 @@ public class KandiLibs extends Activity {
 		
 		if (lr == null) {
 			if (debug) Log.e("RequestPurchase History " , "error! login result is null");
-			Toast.makeText(uio.getContext(), "Request purchase History", Toast.LENGTH_LONG).show();
+			Toast.makeText(uio.getContext(), "Request purchase History - lr is null", Toast.LENGTH_LONG).show();
 			return;
 		}
 		else {
@@ -444,9 +444,12 @@ public class KandiLibs extends Activity {
 		
 			ListPurchasesReturnable mList = (ListPurchasesReturnable) jsonResponse.getOne();
 			mTokens = mList.getArrayListTokens();
-			LoginResult lr = LoginStorageUtils.getLogin(uio.getContext());
-			lr.setArrayListTokens(mTokens);
-			LoginStorageUtils.setLogin(uio.getContext(), lr);
+			//LoginResult lr = LoginStorageUtils.getLogin(uio.getContext());
+			//lr.setArrayListTokens(mTokens);
+			//LoginStorageUtils.setLogin(uio.getContext(), lr);
+			String[] updateTokens = new String[mTokens.size()];
+			updateTokens = mTokens.toArray(updateTokens);
+			LoginStorageUtils.refreshToken(uio.getContext(), updateTokens);
 			purchaseHistoryHandler(mTokens);
 			
 			} else {
