@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -27,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -49,8 +51,8 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 	
 	private static final String PASSWORD_RESET = "pass-reset";
 	private ProgressDialog mProgress;
-	AutoCompleteTextView forgotPassword_email_input;
-
+	//AutoCompleteTextView forgotPassword_email_input;
+	EditText forgotPassword_email_input;
 
 	TextView warningMessage, inuse;
 	boolean isDebug = true;
@@ -66,32 +68,30 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 		context = getApplicationContext();
 		setTitle("Reset Password");
 		this.setTitleColor(Color.BLACK);
-		
-		
+
 		Log.i("Passreset Activity", "Started activity");
-		
+
 		inuse = (TextView) findViewById(R.id.redText_emailInUse);
 		inuse.setVisibility(View.GONE);
-		
+
 		warningMessage = (TextView) findViewById(R.id.passwordReset_warningTextView);
 		warningMessage.setVisibility(View.GONE);
-		
-		// need a counter for multiple failed entries
-		
-		if (this.getIntent() != null && this.getIntent().getAction() != null){
-		if (this.getIntent().getAction().equals(PASSWORD_RESET)){
 
-			Log.i("Passreset Activity", "Setting inuse on ");
-			inuse.setVisibility(View.VISIBLE);
-			
+		// need a counter for multiple failed entries
+
+		if (this.getIntent() != null && this.getIntent().getAction() != null) {
+			if (this.getIntent().getAction().equals(PASSWORD_RESET)) {
+
+				Log.i("Passreset Activity", "Setting inuse on ");
+				inuse.setVisibility(View.VISIBLE);
+
+			} else {
+				Log.i("Passreset Activity", "inuse is off! ");
+			}
 		}
-			 else{
 		
-			Log.i("Passreset Activity", "inuse is off! ");
-		}
-		}
-		
-		forgotPassword_email_input = (AutoCompleteTextView) findViewById(R.id.passwordReset_emailField);
+		//forgotPassword_email_input = (AutoCompleteTextView) findViewById(R.id.passwordReset_emailField);
+		forgotPassword_email_input = (EditText) findViewById(R.id.passwordReset_emailField);
 		password_reset_cancel = (Button) findViewById(R.id.passwordReset_btn_cancel);
 		password_reset_cancel.setOnClickListener(new OnClickListener() {
 
@@ -125,8 +125,10 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 		});
 	
 	// ----------------- integerating the AutoCompleteTextView full of emails 
-		// forgotPassword_email_input;
+		//  ------------------------------- Removed the dynamic loading of email address, this means we can remove the get Accounts permissions 
 		
+		// forgotPassword_email_input;
+		/*
 		final String OTHER_STRING = "other...";
 		final Pattern emailPattern = Patterns.EMAIL_ADDRESS;
 		
@@ -172,23 +174,15 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 			}
 		});
 		
+	
 		forgotPassword_email_input.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (otherChosen) {
-					if (isDebug)
-						Log.i("keyboard", "otherchosen off");
-				} else {
-					if (isDebug)
-						Log.i("keyboard", " should be turning off keyboard!");
-				}
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					forgotPassword_email_input.setInputType(InputType.TYPE_NULL);
-					forgotPassword_email_input.showDropDown();
-				}
+				
 				return false;
 			}
 		});
+			*/
 	}
 	
 	// ----------------------------------------- 
@@ -204,6 +198,8 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 			(new DefaultJSONAsyncTask<ResetPasswordReturnable>(
 					ResetPasswordReturnable.class, this, this, args)).execute();
 		} catch (Exception e) {
+			Log.e("Email Reset Activity" , "Exception thrown in pass reset activity");
+			
 		}
 	}
 

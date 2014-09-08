@@ -142,9 +142,8 @@ public class KandiLibs extends Activity {
 	 */
 	public static final void requestLogin(final Activity act, UserInfoObject uio) {
 		
-		
 		Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
-		
+ 
 		String mSecret = uio.fromAppDetails(sSecret);
 		String mAppId = uio.fromAppDetails(sAppId);
 
@@ -202,25 +201,18 @@ public class KandiLibs extends Activity {
 		
 		if (lr == null) { 
 			if (debug) Log.e("Request Validate In App ", "login Result is null!");
+			Toast.makeText(uio.getContext(), "Need to login before you do this! " , Toast.LENGTH_SHORT).show();
 			return; 
 		}
 		try {
 			// need to start the task here
-			int userId = lr.getUserId();
-			final String userAuth = lr.getUserAuthHash();
-			final String userAuthExpires = lr.getUserAuthExpires();
-			final String appId = appDetails.get(sAppId);
-			if (debug) Log.i("appid is ", ""+ appId);
-			final String secretKey = appDetails.get(sSecret);
-			if (debug) Log.i("secret key is ", "" + secretKey);
-			
 			HashMap<String, String> args = new HashMap<String, String>();
-			args.put(AAppReturnable.APP_ID, appId);
-			args.put(AAppReturnable.APP_SECRET, secretKey);
-			args.put(AAppReturnable.USER_ID, String.valueOf(userId));
-			args.put(AAppReturnable.AUTH_HASH, userAuth);
+			args.put(AAppReturnable.APP_ID, appDetails.get(sAppId));
+			args.put(AAppReturnable.APP_SECRET, appDetails.get(sSecret));
+			args.put(AAppReturnable.USER_ID, lr.getUserIdString());
+			args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
 			args.put(AAppReturnable.TOKEN, mToken);
-			args.put(AAppReturnable.AUTH_EXPIRES, userAuthExpires);
+			args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
 			// Start task here, pass in context , hashmap
 			
 			new DefaultJSONAsyncTask<ValidatePurchaseReturnable>(
@@ -244,12 +236,11 @@ public class KandiLibs extends Activity {
 		}
 	}
 
-	protected static void validateResponseHandler(
-			JSONResponse<ValidatePurchaseReturnable> jsonResponse) {
+	protected static void validateResponseHandler(JSONResponse<ValidatePurchaseReturnable> jsonResponse) {
 
 		JSONResponse<ValidatePurchaseReturnable> myResponse = jsonResponse;
+		String resp = myResponse.toString(); 
 		
-	String resp = myResponse.toString(); 
 		if (debug) Log.e("VALIDATEPURCHASE RESPONSE IS", "" + resp);
 		if (myResponse.getCode() != 200) {
 			if (debug) Log.e("Kandilibs/Networking error", myResponse.getCode() + " returned");
@@ -293,15 +284,15 @@ public class KandiLibs extends Activity {
 		sAuthInAppListener = authInAppListener;
 		Context context = uio.getContext();
 		LoginResult lr = uio.getLoginResult();
-		HashMap<String,String> appDetails = uio.getAppDetails();
 		
 		if (lr == null) {
 			if (debug) Log.e("authInAppPurchase " , "error! login result is null");
 			Log.e("In-App purchase Error" , "User not logged in ! ");
-			
+			Toast.makeText(uio.getContext(), "Need to login first! ", Toast.LENGTH_LONG).show();
 			return;
 			}
-	try {
+	
+		try {
 		
 		// need to start the task here
 		HashMap<String, String> args = new HashMap<String, String>();
@@ -311,8 +302,8 @@ public class KandiLibs extends Activity {
 		args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
 		args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
 		args.put(AAppReturnable.DESCRIPTION	,mDescription.trim().toLowerCase(Locale.getDefault()));
-		args.put(AAppReturnable.TOKEN, mToken.trim().toLowerCase(Locale.getDefault()));
-		args.put(AAppReturnable.AMOUNT, mAmount.trim().toLowerCase(Locale.getDefault()));
+		args.put(AAppReturnable.TOKEN, mToken);
+		args.put(AAppReturnable.AMOUNT, mAmount.trim());
 		
 		new DefaultJSONAsyncTask<AuthorizePurchaseReturnable>(
 			AuthorizePurchaseReturnable.class,
@@ -362,6 +353,7 @@ public class KandiLibs extends Activity {
 	 */
 	public static boolean checkPurchase(final UserInfoObject uio, final String token){
 		setOwned(false);
+		
 		if (uio.getLoginResult() == null){
 			if (debug) Log.e("CheckPurchase library call" , "User needs to be logged in.");
 			Toast.makeText(uio.getContext(), "You need to log in first!" , Toast.LENGTH_LONG).show();
@@ -370,7 +362,7 @@ public class KandiLibs extends Activity {
 		if (uio.getLoginResult() != null){
 			LoginResult lr = uio.getLoginResult();
 			
-			if (lr.getArrayListTokens().contains(token)){
+			if (lr.getArrayListTokens() != null && lr.getArrayListTokens().contains(token)){
 				setOwned(true);
 				return getOwned();
 		}
@@ -461,7 +453,7 @@ public class KandiLibs extends Activity {
 				if (debug) Log.e("ListPurchaseTask", "json is null");
 			}
 		}
-	}, args).execute();
+					}, args).execute();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -498,6 +490,7 @@ public class KandiLibs extends Activity {
 		
 		try {
 			if (uio.getLoginResult() == null)
+				Toast.makeText(uio.getContext(), "Need to login First! " , Toast.LENGTH_LONG).show();
 			return; 
 		} catch (Exception E) { 
 			if (debug) Log.e("error thrown in retreiving userverify , when not logged in" , "printing error: " + E);
@@ -505,22 +498,16 @@ public class KandiLibs extends Activity {
 			
 		Context ctx = uio.getContext();
 		LoginResult lr = uio.getLoginResult();
-		HashMap<String,String> devDetails = uio.getAppDetails();
 		
-		if (debug) Log.i("Printing new lr " , "" + lr.toString());
-		if (debug) Log.i("Printing new devDetails" , "" + devDetails.toString());
+	
 		if (debug) Log.i("Printing LoginResult", "" + lr);
 		
-		final int mUserId = lr.getUserId();
-		final String mAuthHash = lr.getUserAuthHash();
-		final String mAppId = devDetails.get(sAppId);
-		final String mSecretKey = devDetails.get(sSecret);
 		final HashMap<String, String> hm = new HashMap<String, String>();
 		
-		hm.put(AAppReturnable.USER_ID, "" + mUserId);
-		hm.put(AAppReturnable.APP_ID, mAppId);
-		hm.put(AAppReturnable.AUTH_HASH, mAuthHash);
-		hm.put(AAppReturnable.APP_SECRET, mSecretKey);
+		hm.put(AAppReturnable.USER_ID, lr.getUserIdString());
+		hm.put(AAppReturnable.APP_ID, uio.getAppId());
+		hm.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
+		hm.put(AAppReturnable.APP_SECRET, uio.getSecretKey());
 
 		try {
 			new DefaultJSONAsyncTask<ValidateUserReturnable>(
