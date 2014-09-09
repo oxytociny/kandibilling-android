@@ -4,7 +4,7 @@ This is the new Mikandi Inapp library. It brings Mikandi related functionality t
  
 This library is to be improved steadily in the foresee-able future as we upgrade our back end systems and have the option to add more features. 
 
-There are extensive documentation for the library that can be found here: 
+There are extensive documentation for the library that can be found here:http://tools.mikandi.com/confluence/display/KANDI/KandiLibs+Documentation
 
 and an example app created to allow developers to see the functionality of the library in action here: https://bitbucket.org/mikandi/inapp-example-app
 
