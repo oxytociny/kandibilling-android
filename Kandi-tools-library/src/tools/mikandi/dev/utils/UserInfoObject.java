@@ -86,7 +86,7 @@ public class UserInfoObject {
 	}
 
 	public void setLoginResult(LoginResult lr) {
-		if (isDebug) Log.i("should be setting login result", "about to print");
+		if (KandiLibs.debug) Log.i("should be setting login result", "about to print");
 		LoginStorageUtils.setLogin(myContext, lr);
 	}
 

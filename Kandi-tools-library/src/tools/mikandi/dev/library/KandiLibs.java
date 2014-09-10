@@ -4,22 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
 import com.saguarodigital.returnable.defaultimpl.JSONResponse;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
-import tools.mikandi.dev.inapp.AccountBalancePoint;
 import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
 import tools.mikandi.dev.inapp.ValidateUserReturnable;
-import tools.mikandi.dev.inapp.onBalanceRetreiveListener;
 import tools.mikandi.dev.inapp.onPurchaseHistoryListener;
 import tools.mikandi.dev.inapp.onUserVerificationListener;
 import tools.mikandi.dev.login.AAppReturnable;
@@ -62,16 +57,13 @@ public class KandiLibs extends Activity {
 	public static final String sAppId = "appid";
 	public static final String sSecret = "secretkey";
 	
-	private static int mBalance = -2;
-	
+
 	public static final boolean debug = true;
-	public static final boolean balanceDebug = true;
 
 	private static onPurchaseHistoryListener sPurchaseHistory = null;
 	private static OnValidationListener sValidate = null;
 	private static onUserVerificationListener sOnUserVerification = null;
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
-	private static onBalanceRetreiveListener sBalanceListener = null;
 	public static final int GRABTOKENS_FROMDEVICE = 0x300;
 	public static final int GRABTOKENS_FROMSERVER = 0x301;
 	public static final boolean libsBoolean = true;
@@ -142,7 +134,7 @@ public class KandiLibs extends Activity {
 	 */
 	public static final void requestLogin(final Activity act, UserInfoObject uio) {
 		
-		Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
+		if (debug) Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
  
 		String mSecret = uio.getSecretKey();
 		String mAppId = uio.getAppId();
@@ -196,7 +188,6 @@ public class KandiLibs extends Activity {
 		sValidate = validateListener;
 		LoginResult lr = uio.getLoginResult(); 
 		Context context = uio.getContext(); 
-		HashMap<String, String> appDetails = uio.getAppDetails();
 		
 		if (lr == null) { 
 			if (debug) Log.e("Request Validate In App ", "login Result is null!");
@@ -381,7 +372,7 @@ public class KandiLibs extends Activity {
 			@Override
 			public void onFailedHistoryRetrieved() {
 				setOwned(false);
-				if (debug) Log.i("token check " , "failed to retreive tokens list");
+				 Log.e("token check " , "failed to retreive tokens list");
 			}
 		});
 		boolean test = getOwned();
