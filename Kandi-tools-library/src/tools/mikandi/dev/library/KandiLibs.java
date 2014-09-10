@@ -435,9 +435,6 @@ public class KandiLibs extends Activity {
 		
 			ListPurchasesReturnable mList = (ListPurchasesReturnable) jsonResponse.getOne();
 			mTokens = mList.getArrayListTokens();
-			//LoginResult lr = LoginStorageUtils.getLogin(uio.getContext());
-			//lr.setArrayListTokens(mTokens);
-			//LoginStorageUtils.setLogin(uio.getContext(), lr);
 			String[] updateTokens = new String[mTokens.size()];
 			updateTokens = mTokens.toArray(updateTokens);
 			LoginStorageUtils.refreshToken(uio.getContext(), updateTokens);
