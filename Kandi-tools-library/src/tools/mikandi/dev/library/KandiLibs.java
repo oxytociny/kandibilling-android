@@ -29,11 +29,8 @@ import tools.mikandi.dev.inapp.ValidatePurchaseReturnable;
 
 /**
  * The main KandiLibs class. All API calls use a method from this class.
- * 
  * Feel free to go look about the source code, but it gets complicated quickly.
- * 
  * You <b> will regret </b> autoformatting this page! 
- * 
  */
 public class KandiLibs extends Activity {
 
@@ -114,12 +111,11 @@ public class KandiLibs extends Activity {
 	 * @param act - Reference to the activity in which this has been called. 
 	 */
 	public static final void requestBuyGold(final Activity act) {
-		String url = "https://mikandi.com/buygold" ;
-		
+		String url = "https://mikandi.com/buygold";
+
 		Intent mIntent = new Intent(Intent.ACTION_VIEW);
 		mIntent.setData(Uri.parse(url));
 		act.startActivity(mIntent);
-	
 	}
 
 	// -------------------------------------------------------- Buy Gold Activity End  --------------------------------------------------------------
@@ -133,23 +129,20 @@ public class KandiLibs extends Activity {
 	 * @param loginListener
 	 */
 	public static final void requestLogin(final Activity act, UserInfoObject uio) {
-		
-		if (debug) Log.i("DEBUGGING XML ERROR: " , "Request Login in library");
- 
+
+		if (debug)	Log.i("DEBUGGING XML ERROR: ", "Request Login in library");
+
 		String mSecret = uio.getSecretKey();
 		String mAppId = uio.getAppId();
 
-		Log.i("DEBUGGING XML ERROR: " , "Secret key  " + mSecret  + " and appid " + mAppId);
-		
+		if (debug) Log.i("DEBUGGING XML ERROR: ", "Secret key  " + mSecret + " and appid "+ mAppId);
 		Intent mIntent = new Intent(act, LoginActivity.class);
-		Log.i("DEBUGGING XML ERROR: " , "Login Intent created");
-		
+		if (debug) Log.i("DEBUGGING XML ERROR: ", "Login Intent created");
 		mIntent.putExtra(sSecret, mSecret);
 		mIntent.putExtra(sAppId, mAppId);
-		Log.i("DEBUGGING XML ERROR: " , "starting login activity");
-		
+		if (debug) Log.i("DEBUGGING XML ERROR: ", "starting login activity");
 		act.startActivity(mIntent);
-	
+
 	}
 	// ---------------------------------------------- Login Activity End----------------------------------------------------------------------------
 	// ---------------------------------------------- Purchase checking ------------------------
@@ -184,18 +177,21 @@ public class KandiLibs extends Activity {
 	 */
 	public static void requestValidateInApp(UserInfoObject uio,
 			final OnValidationListener validateListener, String mToken) {
-		
+
 		sValidate = validateListener;
-		LoginResult lr = uio.getLoginResult(); 
-		Context context = uio.getContext(); 
-		
-		if (lr == null) { 
-			if (debug) Log.e("Request Validate In App ", "login Result is null!");
-			Toast.makeText(uio.getContext(), "Need to login before you do this! " , Toast.LENGTH_SHORT).show();
-			return; 
-		}
+		LoginResult lr = uio.getLoginResult();
+		Context context = uio.getContext();
+
+		if (lr == null) {
+			if (debug)
+				Log.e("Request Validate In App ", "login Result is null!");
+			Toast.makeText(uio.getContext(),
+					"Need to login before you do this! ", Toast.LENGTH_SHORT)
+					.show();
+			return;
+			}
 		try {
-			// need to start the task here
+		
 			HashMap<String, String> args = new HashMap<String, String>();
 			args.put(AAppReturnable.APP_ID, uio.getAppId());
 			args.put(AAppReturnable.APP_SECRET, uio.getSecretKey());
@@ -203,8 +199,7 @@ public class KandiLibs extends Activity {
 			args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
 			args.put(AAppReturnable.TOKEN, mToken);
 			args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
-			// Start task here, pass in context , hashmap
-			
+	
 			new DefaultJSONAsyncTask<ValidatePurchaseReturnable>(
 					ValidatePurchaseReturnable.class,
 					context,
@@ -212,13 +207,17 @@ public class KandiLibs extends Activity {
 						@Override
 						public void onJSONLoaded(
 								JSONResponse<ValidatePurchaseReturnable> jsonResponse) {
-							if (debug) Log.i("Validate response is : " , "" + jsonResponse.toString());
-							
-							ValidatePurchaseReturnable mVPR = jsonResponse.getOne();
-							
+							if (debug)
+								Log.i("Validate response is : ", ""
+										+ jsonResponse.toString());
+
+							ValidatePurchaseReturnable mVPR = jsonResponse
+									.getOne();
+
 							validateResponseHandler(jsonResponse);
-							if (debug) Log.i("Returned ValidatePurchaseReturnable", 
-									"responese : " + mVPR.toString());
+							if (debug)
+								Log.i("Returned ValidatePurchaseReturnable",
+										"responese : " + mVPR.toString());
 						}
 					}, args).execute();
 		} catch (Exception E) {
@@ -468,13 +467,11 @@ public class KandiLibs extends Activity {
 
 	// ------------------------------------------------------ Verify User ---------------------------------------------------
 	/**
-	 * devDetails is a hashmap containing information passed from the app to the
-	 * library (this class) that holds app specific information such as the
-	 * appid and the app secret key. This information is pulled from the
-	 * manifest file.
+	 * This will tell you whether or not the user has purchased the application from the MiKandi app store. 
+	 * Becareful not to lock out the users who purchase your app! 
 	 * 
-	 * @param ctx
-	 * @param devDetails
+	 * @param UserInfoObject uio 
+	 * @param onUserVerificationListener userValidListener 
 	 */
 	public static void requestUserVerify(UserInfoObject uio, onUserVerificationListener userValidListener) {
 			sOnUserVerification = userValidListener;
@@ -511,7 +508,7 @@ public class KandiLibs extends Activity {
 								if (jsonResponse != null) { 
 								ValidateUserReturnable mResponse = (ValidateUserReturnable) jsonResponse
 										.getOne();
-								if (debug) Log.e("Code from request USer verify : " , "" + jsonResponse.getCode());
+								if (debug) Log.e("Code from request User verify : " , "" + jsonResponse.getCode());
 								if (mResponse.isValidated()) {
 									isValid(true, jsonResponse.getCode());
 								} else {
@@ -552,6 +549,7 @@ public class KandiLibs extends Activity {
 	// ------------------------------------------------------ End Verify User--------------------------------------------------------
 
 	// -------------------------------------------------- Random functions -----------------------------------------------------------------
+	// setters are used when we need to handle a owned variable inside a listener and can't reference a class var without setters.
 	private static void setOwned(boolean var) { 
 		ownedBoolean = var;
 	}
