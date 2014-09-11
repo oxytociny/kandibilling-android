@@ -24,6 +24,4 @@ and an example app created to allow developers to see the functionality of the l
 **Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
 
 Future Features:
-Enable subscription 
-Allow user to buy gold within app if previously saved payment details 
-Email for suggestions - Mike@mikandi.com
+- Email for suggestions - Mike@mikandi.com
