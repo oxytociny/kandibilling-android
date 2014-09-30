@@ -44,7 +44,7 @@ public final class MiKandiUtils {
 	public static final String EMPTY = "";
 
 	private static final String SHA256_ALGORITHM = "SHA-256";
-	
+	public static final String installer = "com.mikandi.vending";
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("MMMM d, yyyy", Locale.US);
 	public static final SimpleDateFormat SDF_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 	public static final SimpleDateFormat SDF_HHMMSS = new SimpleDateFormat("HH:mm:ss", Locale.US);

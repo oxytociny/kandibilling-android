@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
 import com.saguarodigital.returnable.defaultimpl.JSONResponse;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import tools.mikandi.dev.login.LoginStorageUtils;
 import tools.mikandi.dev.passreset.DefaultJSONAsyncTask;
 import tools.mikandi.dev.passreset.OnJSONResponseLoadedListener;
 import tools.mikandi.dev.purchasehistory.ListPurchasesReturnable;
+import tools.mikandi.dev.utils.InstallerCheck;
 import tools.mikandi.dev.utils.UserInfoObject;
 import tools.mikandi.dev.inapp.ValidatePurchaseReturnable;
 
@@ -32,7 +35,7 @@ import tools.mikandi.dev.inapp.ValidatePurchaseReturnable;
  * Feel free to go look about the source code, but it gets complicated quickly.
  * You <b> will regret </b> autoformatting this page! 
  */
-public class KandiLibs extends Activity {
+public class KandiLibs {
 
 	public static final int REQUEST_LOGIN = 0x100;
 	public static final int RESULT_LOGIN = 0x101;
@@ -112,7 +115,6 @@ public class KandiLibs extends Activity {
 	 */
 	public static final void requestBuyGold(final Activity act) {
 		String url = "https://mikandi.com/buygold";
-
 		Intent mIntent = new Intent(Intent.ACTION_VIEW);
 		mIntent.setData(Uri.parse(url));
 		act.startActivity(mIntent);
@@ -547,7 +549,14 @@ public class KandiLibs extends Activity {
 		}
 	}
 	// ------------------------------------------------------ End Verify User--------------------------------------------------------
-
+	/**
+	 * this checks the system setting 
+	 * @param ctx
+	 * @return
+	 */
+	public static boolean checkInstaller(Context ctx) {	
+		return InstallerCheck.checkInstaller(ctx);
+	}
 	// -------------------------------------------------- Random functions -----------------------------------------------------------------
 	// setters are used when we need to handle a owned variable inside a listener and can't reference a class var without setters.
 	private static void setOwned(boolean var) { 
