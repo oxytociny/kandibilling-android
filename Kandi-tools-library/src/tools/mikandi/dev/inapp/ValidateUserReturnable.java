@@ -74,7 +74,7 @@ public class ValidateUserReturnable extends AAppReturnable {
 				else { 
 					Log.e("Validating User json", "purchased not retreived"); 
 			}
-				}
+		}
 			catch (Exception E) { 
 				ret = false; 
 				E.printStackTrace();
