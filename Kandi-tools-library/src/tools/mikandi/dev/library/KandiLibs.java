@@ -37,42 +37,15 @@ import tools.mikandi.dev.inapp.ValidatePurchaseReturnable;
  */
 public class KandiLibs {
 
-	public static final int REQUEST_LOGIN = 0x100;
-	public static final int RESULT_LOGIN = 0x101;
-	
-	public static final int REQUEST_PASSRESET = 0x102;
-	public static final int RESULT_PASSRESET = 0x103;
-
-	public static final int REQUEST_REGISTRATION = 0x104;
-	public static final int RESULT_REGISTRATION = 0x105;
-
-	public static final int REQUEST_BUYGOLD = 0x106;
-	public static final int RESULT_BUYGOLD = 0x106;
-
-	public static final String ACTION_LOGIN = "login";
-	public static final String ACTION_PASSRESET = "pass-reset";
-	public static final String ACTION_REGISTER = "registration";
-	public static final String ACTION_BUYGOLD = "buy-gold";
-
+	public static final boolean debug = true;
 	public static final String sAppId = "appid";
 	public static final String sSecret = "secretkey";
+	public static boolean ownedBoolean = false;
 	
-
-	public static final boolean debug = true;
-
 	private static onPurchaseHistoryListener sPurchaseHistory = null;
 	private static OnValidationListener sValidate = null;
 	private static onUserVerificationListener sOnUserVerification = null;
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
-	public static final int GRABTOKENS_FROMDEVICE = 0x300;
-	public static final int GRABTOKENS_FROMSERVER = 0x301;
-	public static final boolean libsBoolean = true;
-	public static final int RESULT_BAILEDLOGIN = 26; 
-	public static boolean ownedBoolean = false;
-	
-	/***
-	 * AUTO FORMAT AT OWN RISK!!!!!!!!!!!! 
-	 */
 	
 	/**
 	 * 
@@ -100,9 +73,9 @@ public class KandiLibs {
 	 * 
 	 * and i (Mike, the library developer) can be reached at: kandilibs@mikandi.com
 	 * 
-	 *  I encourage you too reach out if you have any trouble and more importantly 
-	 *  if you could recommend any improvements, or any features that as developers, would
-	 *  help you out.
+	 * I encourage you too reach out if you have any trouble and more importantly 
+	 * if you could recommend any improvements, or any features that as developers, would
+	 * help you out.
 	 * 
 	 */
 
@@ -132,17 +105,22 @@ public class KandiLibs {
 	 */
 	public static final void requestLogin(final Activity act, UserInfoObject uio) {
 
-		if (debug)	Log.i("DEBUGGING XML ERROR: ", "Request Login in library");
+		if (debug)
+			Log.i("DEBUGGING XML ERROR: ", "Request Login in library");
 
 		String mSecret = uio.getSecretKey();
 		String mAppId = uio.getAppId();
 
-		if (debug) Log.i("DEBUGGING XML ERROR: ", "Secret key  " + mSecret + " and appid "+ mAppId);
+		if (debug)
+			Log.i("DEBUGGING XML ERROR: ", "Secret key  " + mSecret
+					+ " and appid " + mAppId);
 		Intent mIntent = new Intent(act, LoginActivity.class);
-		if (debug) Log.i("DEBUGGING XML ERROR: ", "Login Intent created");
+		if (debug)
+			Log.i("DEBUGGING XML ERROR: ", "Login Intent created");
 		mIntent.putExtra(sSecret, mSecret);
 		mIntent.putExtra(sAppId, mAppId);
-		if (debug) Log.i("DEBUGGING XML ERROR: ", "starting login activity");
+		if (debug)
+			Log.i("DEBUGGING XML ERROR: ", "starting login activity");
 		act.startActivity(mIntent);
 
 	}
@@ -282,7 +260,7 @@ public class KandiLibs {
 			Toast.makeText(uio.getContext(), "Need to login first! ", Toast.LENGTH_LONG).show();
 			return;
 			}
-	
+
 		try {
 		
 		// need to start the task here
@@ -550,12 +528,13 @@ public class KandiLibs {
 	}
 	// ------------------------------------------------------ End Verify User--------------------------------------------------------
 	/**
-	 * this checks the system setting 
+	 * This checks the package installer and will return true if the package 
+	 * was installed by MiKandi. (non-network based DRM)
 	 * @param ctx
 	 * @return
 	 */
-	public static boolean checkInstaller(Context ctx) {	
-		return InstallerCheck.checkInstaller(ctx);
+	public static boolean checkInstaller(UserInfoObject uio) {	
+		return InstallerCheck.checkInstaller(uio.getContext());
 	}
 	// -------------------------------------------------- Random functions -----------------------------------------------------------------
 	// setters are used when we need to handle a owned variable inside a listener and can't reference a class var without setters.

@@ -90,8 +90,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 		dismissDialog();
 		Log.e("LoginActivity ", "Back Button hit");
 		final Intent loginResultIntent = new Intent();
-		loginResultIntent.setAction(KandiLibs.ACTION_LOGIN);
-		this.setResult(KandiLibs.RESULT_BAILEDLOGIN, loginResultIntent);
 		this.finish();
 	}
 
@@ -177,10 +175,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 		final Context context = getApplicationContext();
 		LoginStorageUtils.setLogin(context, result);
 		final Intent loginResultIntent = new Intent();
-		loginResultIntent.setAction(KandiLibs.ACTION_LOGIN);
-		loginResultIntent.putExtra(KandiLibs.ACTION_LOGIN, result);
-		
-		this.setResult(KandiLibs.RESULT_LOGIN, loginResultIntent);
 		this.finish();
 	}
 
