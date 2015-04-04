@@ -99,9 +99,15 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 			long startTime = System.currentTimeMillis();
 			final ParserUtils p = new ParserUtils(jo);
 			AuthorizePurchaseReturnable obj = (AuthorizePurchaseReturnable) empty;
+		
 			Log.d("AuthorizePurchaseReturnableParser" , "Parsing " + empty.getClass().getSimpleName());
 			try {
-
+				
+			if (jo == null) { 
+					
+			}
+				
+				
 			if (jo.has("purchase_id")) {  
 					Log.i("Auth Purchase Parser" , "has token");
 					Log.i("Auth Purchase Parser" , "about to extract tokens");

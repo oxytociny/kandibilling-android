@@ -8,4 +8,5 @@ public interface onPurchaseHistoryListener {
 	
 	public void onFailedHistoryRetrieved();
 	
+	public void onNoPurchases();
 }

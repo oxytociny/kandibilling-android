@@ -1,6 +1,7 @@
 package tools.mikandi.dev.purchasehistory;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,9 +69,6 @@ public class ListPurchasesReturnable extends AAppReturnable {
 		return new EmptyCache<ListPurchasesReturnable>();
 	}
 	
-	
-	
-	
 	private class ListPurchasesReturnableParser implements IParser<ListPurchasesReturnable> {
 		private long sTotalTime = 0;
 		
@@ -83,7 +81,8 @@ public class ListPurchasesReturnable extends AAppReturnable {
 			Log.d("AuthorizePurchaseReturnableParser" , "Parsing " + empty.getClass().getSimpleName());
 			try {
 				Log.i("printing out purchase history " , jo.toString());
-				if (jo.toString() == "{\"purchases\":[]}") {  
+				if (jo.toString().equals("{\"purchases\":[]}")) {  
+					
 					Log.i("Validate User Parser" , "has purchased");
 					Log.i("Validate User Parser" , "about to extract purchased Value");	
 					
@@ -107,13 +106,13 @@ public class ListPurchasesReturnable extends AAppReturnable {
 		}
 	}
 
-	public ArrayList<String> getArrayListTokens() {
-		ArrayList<String> myString = new ArrayList<String>(mTokens.size());
-		
+	public List<String> getArrayListTokens() {
+		List<String> myString = new LinkedList<String>();
+		if (mTokens != null) {
 		for (String s: mTokens) { 
 			myString.add(s);
+			}
 		}
-		
 		return myString;
 	}
 	

@@ -94,7 +94,7 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	}
 
 	/**
-	 * Click handler for all the buttons
+	 * Click handler for all the buttons 
 	 * 
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */

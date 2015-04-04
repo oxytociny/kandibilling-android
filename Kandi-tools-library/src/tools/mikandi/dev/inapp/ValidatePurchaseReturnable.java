@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.AAppReturnable;
 import tools.mikandi.dev.purchasehistory.ListPurchasesReturnable;
 import tools.mikandi.dev.utils.ParserUtils;
@@ -63,8 +64,8 @@ public class ValidatePurchaseReturnable extends AAppReturnable {
 		sb.append('&').append(AUTH_HASH).append('=').append(args.get(AUTH_HASH));
 		sb.append('&').append(TOKEN).append('=').append(eToken);
 		sb.append('&').append(SIGNATURE).append('=');
-		sb.append(this.computeSHA256(args.get(USER_ID), args.get(APP_ID),
-		args.get(TOKEN), args.get(APP_SECRET)));
+		sb.append(this.computeSHA256(args.get(USER_ID), args.get(APP_ID), args.get(TOKEN), args.get(APP_SECRET)));
+		if (KandiLibs.debug) Log.i("Validate Purchase Returnable " , sb.toString());
 		return sb.toString();
 	}
 

@@ -256,7 +256,7 @@ public class KandiLibs {
 		
 		if (lr == null) {
 			if (debug) Log.e("authInAppPurchase " , "error! login result is null");
-			Log.e("In-App purchase Error" , "User not logged in ! ");
+			if (debug)  Log.e("In-App purchase Error" , "User not logged in ! ");
 			Toast.makeText(uio.getContext(), "Need to login first! ", Toast.LENGTH_LONG).show();
 			return;
 			}
@@ -297,6 +297,7 @@ public class KandiLibs {
 					e.printStackTrace();
 				}
 			}
+	
 	/**
 	 *  This is a callback handler for the AuthInApp function
 	 *  @param code - this is the return code
@@ -353,9 +354,14 @@ public class KandiLibs {
 				setOwned(false);
 				 Log.e("token check " , "failed to retreive tokens list");
 			}
+
+			@Override
+			public void onNoPurchases() {
+				setOwned(false);
+				
+			}
 		});
-		boolean test = getOwned();
-		return test;
+		return getOwned();
 	}
 	
 	/**
@@ -398,26 +404,40 @@ public class KandiLibs {
 				args.put(AAppReturnable.USER_ID, lr.getUserIdString());
 				args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
 				args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
+	
 		try {
 			new DefaultJSONAsyncTask<ListPurchasesReturnable>(
 			ListPurchasesReturnable.class,
 			context,
 			new OnJSONResponseLoadedListener<ListPurchasesReturnable>() {
-
+		
 		@Override
 		public void onJSONLoaded(
 			JSONResponse<ListPurchasesReturnable> jsonResponse) {
-			ArrayList<String> mTokens = null;
+			List<String> mTokens = null;
 									
 			if (jsonResponse != null) {
+				
+				
+			
 			if (debug) Log.i("Server response from get list" , "" + jsonResponse.getCode());
 		
+			if (jsonResponse.getCode() == 401) { 
+				sPurchaseHistory.onNoPurchases();
+				return;
+			}
+
 			ListPurchasesReturnable mList = (ListPurchasesReturnable) jsonResponse.getOne();
 			mTokens = mList.getArrayListTokens();
+			
+			if (mTokens != null) 
+			{ 
 			String[] updateTokens = new String[mTokens.size()];
 			updateTokens = mTokens.toArray(updateTokens);
 			LoginStorageUtils.refreshToken(uio.getContext(), updateTokens);
+			}
 			purchaseHistoryHandler(mTokens);
+			
 			
 			} else {
 				if (debug) Log.e("ListPurchaseTask", "json is null");
@@ -429,6 +449,8 @@ public class KandiLibs {
 				}
 			}
 		}
+	
+	
 	/**
 	 * This is the call back handler for the RequestPurchaseHistory application 
 	 * tokens passed through to the on sucessful callback, void onSucessful included
@@ -466,8 +488,6 @@ public class KandiLibs {
 			
 		Context ctx = uio.getContext();
 		LoginResult lr = uio.getLoginResult();
-		
-	
 		if (debug) Log.i("Printing LoginResult", "" + lr);
 		
 		final HashMap<String, String> hm = new HashMap<String, String>();
@@ -486,23 +506,23 @@ public class KandiLibs {
 								JSONResponse<ValidateUserReturnable> jsonResponse) {
 							try {
 								if (jsonResponse != null) { 
-								ValidateUserReturnable mResponse = (ValidateUserReturnable) jsonResponse
-										.getOne();
+								ValidateUserReturnable mResponse = (ValidateUserReturnable) jsonResponse.getOne();
 								if (debug) Log.e("Code from request User verify : " , "" + jsonResponse.getCode());
-								if (mResponse.isValidated()) {
+								
+								if (mResponse.isValidated()) 
 									isValid(true, jsonResponse.getCode());
-								} else {
+								 else 
 									isValid(false, jsonResponse.getCode());
-								}
+								
 
 								}
-								else { 
+								else { // if json response is null
 									if (debug) Log.e("ValidateUserReturnable", "jsonResponse is null");
-									}} catch (Exception E) {
-								
-			if (debug) Log.e("error thrown in request User verification",
-					"Error is : "+ E);
-							}
+									}
+							} catch (Exception E) {
+			if (debug) Log.e("error thrown in request User verification",	"Error is : "+ E);
+			
+						}
 						}
 					}, hm).execute();
 
