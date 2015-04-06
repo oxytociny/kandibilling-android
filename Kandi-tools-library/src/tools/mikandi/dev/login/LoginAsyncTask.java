@@ -49,8 +49,6 @@ public class LoginAsyncTask extends JSONAsyncTask<UserLoginReturnable>
 		
 		// successful login:
 		final UserLoginReturnable ret = (UserLoginReturnable) result.getOne();
-		Log.i("LoginAsyncTask.onPostExecute", "Login Sucess");
-		Log.i("Printing loginResult", ret.toString()); 
 		LoginResult loginResult = null;
 		
 		//check for tokens

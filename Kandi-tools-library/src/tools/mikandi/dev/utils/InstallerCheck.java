@@ -40,7 +40,7 @@ public final class InstallerCheck {
 					"package installed by (null means installed by system not mikandi) : "
 							+ name, Toast.LENGTH_SHORT).show();
 			final boolean installer = name.equals(MiKandiUtils.installer);
-			Log.e("Check installer" , "returning : " + installer);
+			if (KandiLibs.debug) Log.e("Check installer" , "returning : " + installer);
 			return installer;
 		} catch (Exception e) {
 			e.printStackTrace();

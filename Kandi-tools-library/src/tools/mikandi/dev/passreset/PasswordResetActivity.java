@@ -69,7 +69,6 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 		setTitle("Reset Password");
 		this.setTitleColor(Color.BLACK);
 
-		Log.i("Passreset Activity", "Started activity");
 
 		inuse = (TextView) findViewById(R.id.redText_emailInUse);
 		inuse.setVisibility(View.GONE);
@@ -80,14 +79,10 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 		// need a counter for multiple failed entries
 
 		if (this.getIntent() != null && this.getIntent().getAction() != null) {
-			if (this.getIntent().getAction().equals(PASSWORD_RESET)) {
-
-				Log.i("Passreset Activity", "Setting inuse on ");
+			if (this.getIntent().getAction().equals(PASSWORD_RESET)) 
+			{
 				inuse.setVisibility(View.VISIBLE);
-
-			} else {
-				Log.i("Passreset Activity", "inuse is off! ");
-			}
+			} 
 		}
 		
 		//forgotPassword_email_input = (AutoCompleteTextView) findViewById(R.id.passwordReset_emailField);
@@ -98,7 +93,6 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 			@Override
 			public void onClick(View v) {
 				finishActivity();
-				if (isDebug) Log.i("Event: ", "cancel button pressed");
 			}
 		});
 
@@ -107,11 +101,8 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 
 			@Override
 			public void onClick(View v) {
-
-				if (isDebug) Log.i("Event: ", "send button pressed!");
 				String input = forgotPassword_email_input.getText().toString().trim();	
 				onResetAccount(input);
-				
 			}
 		});
 
@@ -119,74 +110,11 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 		password_reset_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (isDebug) Log.i("Event: ", "Login button pressed!");
 				finishActivityAndReturnToLogin(context);
 			}
 		});
 	
-	// ----------------- integerating the AutoCompleteTextView full of emails 
-		//  ------------------------------- Removed the dynamic loading of email address, this means we can remove the get Accounts permissions 
-		
-		// forgotPassword_email_input;
-		/*
-		final String OTHER_STRING = "other...";
-		final Pattern emailPattern = Patterns.EMAIL_ADDRESS;
-		
-		List<String> emailList = new ArrayList<String>(0);
-		Account[] accounts = AccountManager.get(context).getAccounts();
-		int primaryEmailCounter = 0;
-		for (Account account : accounts) {
-			if (emailPattern.matcher(account.name.toLowerCase(Locale.getDefault()).trim()).matches()) {
-				if (primaryEmailCounter == 0) {
-					forgotPassword_email_input.setText(account.name.toString().trim().toLowerCase(Locale.getDefault()));
-					primaryEmailCounter++;
-				}
-				// check to not add duplicate email addresses!
-				String temp = account.name;
-				temp = temp.toLowerCase(Locale.getDefault()).trim();
-				if (!emailList.contains(account.name))
-					emailList.add(account.name);
-			}
-		}
-		emailList.add(OTHER_STRING);
-
-		final String[] emailArray = emailList.toArray(new String[emailList.size()]);
-		ArrayAdapter<String> emailListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, emailArray);
-
-		forgotPassword_email_input.setAdapter(emailListAdapter);
-		forgotPassword_email_input.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				String selection = (String) parent.getItemAtPosition(position);
-				if (selection.equals(OTHER_STRING)) {
-					otherChosen = true;
-					forgotPassword_email_input.setInputType(InputType.TYPE_CLASS_TEXT);
-					InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-					mgr.showSoftInput(forgotPassword_email_input, InputMethodManager.SHOW_FORCED);
-					forgotPassword_email_input.setText("");
-					forgotPassword_email_input.requestFocus();
-				} else {
-					forgotPassword_email_input.setText(selection.toString().trim());
-				}
-			}
-		});
-		
-	
-		forgotPassword_email_input.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				
-				return false;
-			}
-		});
-			*/
 	}
-	
-	// ----------------------------------------- 
-	
 	/*
 	 * Takes in the email address and passes it to the password reset task
 	 */
@@ -216,14 +144,12 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 			Toast.makeText(this, "There was an error contacting MiKandi. Please try again", Toast.LENGTH_LONG).show();
 			Log.i("PassresetActivity", "code" + jsonResponse.getCode());
 		}
+		
 		if (jsonResponse.getCode() == 492){
 			warningMessage.setVisibility(View.VISIBLE);;
 				
 		} else {
 			Toast.makeText(context, "Sucessful passchange", Toast.LENGTH_LONG).show();
-			Log.e("PassReset", "Passreset sucessful line #232");
-			
-			
 			Intent intent = new Intent(context,EmailCheckActivity.class);
 			startActivity(intent);
 			PasswordResetActivity.this.finish();
@@ -234,8 +160,6 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 	/**
 	 * These methods allow this class to be intergrated properly into the main application 
 	 */
-	
-	
 	private void finishActivity() {
 		PasswordResetActivity.this.finish();
 	}
@@ -244,19 +168,6 @@ public class PasswordResetActivity extends Activity implements OnJSONResponseLoa
 		Intent intent = new Intent(context,LoginActivity.class);
 		startActivity(intent);
 		PasswordResetActivity.this.finish();
-		Log.i("test" , "test");
 	}
 
-	/**
-	 * not used at the moment, maybe later add link for register
-	 * @param context
-	 */
-	/*
-	@SuppressWarnings("unused")
-	private void finishActivityAndReturnToRegister(Context context){
-		Intent intent = new Intent(context,OneStepRegActivity.class);
-		startActivity(intent);
-		PasswordResetActivity.this.finish();
-	}
-	*/
 }

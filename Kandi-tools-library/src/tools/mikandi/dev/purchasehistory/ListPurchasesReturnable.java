@@ -8,6 +8,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import tools.mikandi.dev.inapp.ValidateUserReturnable;
+import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.AAppReturnable;
 import tools.mikandi.dev.utils.ParserUtils;
 import android.content.Context;
@@ -61,6 +62,7 @@ public class ListPurchasesReturnable extends AAppReturnable {
 		sb.append('&').append(SIGNATURE).append('=');
 		sb.append(this.computeSHA256(args.get(USER_ID), args.get(APP_ID),
 				args.get(APP_SECRET)));
+		if (KandiLibs.debug) Log.i("List Purchases url: " , sb.toString()); 
 		return sb.toString();
 	}
 
@@ -78,17 +80,13 @@ public class ListPurchasesReturnable extends AAppReturnable {
 			long startTime = System.currentTimeMillis();
 			final ParserUtils p = new ParserUtils(jo);
 			ListPurchasesReturnable obj = (ListPurchasesReturnable) empty;
-			Log.d("AuthorizePurchaseReturnableParser" , "Parsing " + empty.getClass().getSimpleName());
+	
 			try {
-				Log.i("printing out purchase history " , jo.toString());
+			
 				if (jo.toString().equals("{\"purchases\":[]}")) {  
-					
-					Log.i("Validate User Parser" , "has purchased");
-					Log.i("Validate User Parser" , "about to extract purchased Value");	
-					
+					Log.i("listPurchases " , " Purchases not returned");
 				}
 				else { 
-					Log.i("printing out result from ListPurchaseReturnable", ""+ jo.toString());
 					obj.mTokens = p.loadStringList("purchases",(String[]) null);
 				}
 			}
@@ -99,10 +97,7 @@ public class ListPurchasesReturnable extends AAppReturnable {
 			}
 			long interval = (System.currentTimeMillis() - startTime); 
 			 sTotalTime += interval; 
-			Log.e("SpeedTest" , " Parsed a " + empty.getClass().getSimpleName() 
-						+ " in " + interval + " ms (time total " + sTotalTime + " ms)");
 			return ret;
-
 		}
 	}
 

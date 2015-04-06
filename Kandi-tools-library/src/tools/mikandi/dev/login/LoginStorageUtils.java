@@ -20,7 +20,7 @@ public final class LoginStorageUtils {
 		}
 		if (Long.parseLong(sp.getString(sUAExpires, "0"), 10) < (System
 				.currentTimeMillis() / 1000)) {
-			Log.w("MiKandiBilling", "Login session expired");
+			Log.i("MiKandiBilling", "Login session expired");
 			clear(ctx);
 			return false;
 		}

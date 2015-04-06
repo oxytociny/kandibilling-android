@@ -128,19 +128,11 @@ public class AccountBalancePoint implements IReturnable {
 			
 			try {
 					obj.mBalance = p.loadInteger(sPointBalence, fallBackBalance);
-					obj.mTimestamp = p.loadLong(sTimeStamp, fallBackTimestamp);
-					Log.e("printing the Balance : " , "" +  obj.mBalance);
-					Log.e("printing timeStamp " , "" + obj.mTimestamp);			
-			
+					obj.mTimestamp = p.loadLong(sTimeStamp, fallBackTimestamp);	
 			} catch (Exception e) {
-				if (Logger.parserDebug) Log.e(TAG, e.getMessage(), e);
+			 Log.e(TAG, e.getMessage(), e);
 		} 
 		
-		long interval = (System.currentTimeMillis() - startTime); 
-		if (Logger.parserDebug) sTotalTime += interval; 
-		if (Logger.parserDebug) Log.e("SpeedTest" , " Parsed a " + empty.getClass().getSimpleName() 
-				+ " in " + interval + " ms (time total " + sTotalTime + " ms)");
-
 		return ret; 
 
 		} 

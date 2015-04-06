@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.AAppReturnable;
 import android.content.Context;
 import android.util.Log;
@@ -82,6 +83,7 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 		sb.append('&').append(DESCRIPTION).append('=').append(eDescription);
 		sb.append('&').append(SIGNATURE).append('=');
 		sb.append(this.computeSHA256(args.get(USER_ID), args.get(APP_ID), args.get(TOKEN), args.get(AMOUNT), args.get(DESCRIPTION), args.get(APP_SECRET)));
+		if (KandiLibs.debug) Log.i("App Authorize ", sb.toString());
 		return sb.toString();
 	}
 
@@ -99,15 +101,7 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 			long startTime = System.currentTimeMillis();
 			final ParserUtils p = new ParserUtils(jo);
 			AuthorizePurchaseReturnable obj = (AuthorizePurchaseReturnable) empty;
-		
-			Log.d("AuthorizePurchaseReturnableParser" , "Parsing " + empty.getClass().getSimpleName());
 			try {
-				
-			if (jo == null) { 
-					
-			}
-				
-				
 			if (jo.has("purchase_id")) {  
 					Log.i("Auth Purchase Parser" , "has token");
 					Log.i("Auth Purchase Parser" , "about to extract tokens");
@@ -127,9 +121,7 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 				Log.e("AuthorizePurchaseParser" , "Error: " +  E);
 			}
 			long interval = (System.currentTimeMillis() - startTime); 
-			 sTotalTime += interval; 
-			Log.e("SpeedTest" , " Parsed a " + empty.getClass().getSimpleName() 
-						+ " in " + interval + " ms (time total " + sTotalTime + " ms)");
+			 sTotalTime += interval; 		
 			return ret;
 
 		}
@@ -144,8 +136,7 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 				list.add(jsonArray.getString(i));
 			}
 		} catch (Exception E) {
-			Log.e("getArrayList", "Exception:" + E);
-			Log.e("getArrayList", "Error with :" + jsonArray.toString());
+			Log.e("Authorize Purchase returnable ", " Error retreiving array list ", E);
 		}
 		return list;
 	}

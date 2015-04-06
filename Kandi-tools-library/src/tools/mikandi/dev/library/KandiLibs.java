@@ -347,20 +347,25 @@ public class KandiLibs {
 			@Override
 			public void onSucessfulHistoryRetrieved(List<String> mTokens) {
 				setOwned(mTokens.contains(token));		
+				if (debug) Log.i("Retreiving Purchase History " , "Tokens Sucessfully retreivied from server"); 
+				if (debug) Log.i("Checking token from purchases "  , " Token was " + ((mTokens.contains(token) == true) ? " found " : " not found - token not purchased by user ")); 
 			}
 			
 			@Override
 			public void onFailedHistoryRetrieved() {
 				setOwned(false);
-				 Log.e("token check " , "failed to retreive tokens list");
+				if (debug) Log.e("Retreiving Purchase History " , "Trouble Retreiving list... Try again later");
 			}
 
 			@Override
 			public void onNoPurchases() {
 				setOwned(false);
+				if (debug) Log.e("Retreiving Purchase History " , "No purchases found");
 				
 			}
 		});
+		
+		Log.i("Token Checking "  , "Token :" + token + " is : " + ((getOwned() == true) ? " purchased " : " not purchased ")); 
 		return getOwned();
 	}
 	
@@ -479,9 +484,11 @@ public class KandiLibs {
 			sOnUserVerification = userValidListener;
 		
 		try {
-			if (uio.getLoginResult() == null)
+			if (uio.getLoginResult() == null) {
+				Log.i("Request user verfiy" , "login is null");
 				Toast.makeText(uio.getContext(), "Need to login First! " , Toast.LENGTH_LONG).show();
-			return; 
+				return; 
+			}
 		} catch (Exception E) { 
 			if (debug) Log.e("error thrown in retreiving userverify , when not logged in" , "printing error: " + E);
 		}

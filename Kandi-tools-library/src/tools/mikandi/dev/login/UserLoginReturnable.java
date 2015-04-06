@@ -4,7 +4,9 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import tools.mikandi.dev.library.KandiLibs;
 import android.content.Context;
+import android.util.Log;
 
 import com.saguarodigital.returnable.IParser;
 import com.saguarodigital.returnable.IReturnable;
@@ -115,6 +117,8 @@ public class UserLoginReturnable extends AAppReturnable {
 		sb.append("&").append(APP_ID).append('=').append(args.get(APP_ID));
 		sb.append('&').append(PASSWORD_MD5).append('=')
 				.append(this.computeMD5(args.get(PASSWORD)));
+		
+		if (KandiLibs.debug) Log.i("Login Activity url : " , sb.toString());
 		return sb.toString();
 	}
 

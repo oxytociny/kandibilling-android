@@ -54,14 +54,11 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 
 	protected void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		Log.i("DEBUGGING XML ERROR: " , "Login OnCreate called");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		Log.i("DEBUGGING XML ERROR: " , "Setting xml view");
 		setContentView(R.layout.login_activity);
 		
-		Log.i("DEBUGGING XML ERROR: " , "View set");
 		Intent lIntent = getIntent();
-		Log.i("DEBUGGING XML ERROR: " , "intent retreived ");
+
 		mSecret = lIntent.getStringExtra("secretkey");
 		mAppId = lIntent.getStringExtra("appid");
 		// ^^^^^^^^^ needing the stuff in drawables ...
@@ -88,8 +85,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	@Override
 	public void onBackPressed() {
 		dismissDialog();
-		Log.e("LoginActivity ", "Back Button hit");
-		final Intent loginResultIntent = new Intent();
 		this.finish();
 	}
 
@@ -101,16 +96,15 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	@Override
 	public void onClick(View v) {
 
-		Log.i("Library - login Activity", "a button pressed");
-
 		int id = v.getId();
 		if (id == R.id.login_btn_forgot) { 
 		
 		dismissDialog();
-			
 		Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
 		startActivity(intent); 
-		if (isDebug) Log.i("Intent", "intent Created!"); }
+		if (isDebug) Log.i("Login Activity " , "User Directed to PasswordReset Activity "); 
+		
+		}
 		
 		if (id == R.id.login_btn_login) {
 			String username = loginActivity_field_Username.getText().toString().trim();
@@ -136,8 +130,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	
 	// Handles the logging in of the user
 	public void loginUser(String username, String password, String appId) {
-
-		if (isDebug) Log.d(this.getClass().getSimpleName(), "Beginning Login Transaction");
 		final HashMap<String, String> args = new HashMap<String, String>();
 		args.put(AAppReturnable.PASSWORD, password);
 		args.put(AAppReturnable.USERNAME, username);
@@ -195,9 +187,9 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	@Override
 	public void onLoginUnsuccessful(int resultCode) {
 			dismissDialog();
-			Log.i("LoginTest" , "LoginUnsucessful code is " + resultCode);
+			Log.i("LoginTest" , "Login was unsucessful, errorcode is " + resultCode);
 			
-			
+			// if failed to login too many times, redirect user to password reset activity
 			if (errorCounter == 2) {
 				Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
 				startActivity(intent); 

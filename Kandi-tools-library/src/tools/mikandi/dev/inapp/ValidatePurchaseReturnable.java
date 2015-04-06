@@ -87,7 +87,6 @@ public class ValidatePurchaseReturnable extends AAppReturnable {
 			long startTime = System.currentTimeMillis();
 			final ParserUtils p = new ParserUtils(jo);
 			ValidatePurchaseReturnable obj = (ValidatePurchaseReturnable) empty;
-			Log.i("AuthorizePurchaseReturnableParser" , "Parsing " + empty.getClass().getSimpleName());
 			try {
 				obj.purchases = p.loadStringList(sPurchases ,(String[]) null);
 			}
@@ -96,12 +95,7 @@ public class ValidatePurchaseReturnable extends AAppReturnable {
 				E.printStackTrace();
 				Log.e("AuthorizePurchaseParser" , "Error: " +  E);
 			}
-			long interval = (System.currentTimeMillis() - startTime); 
-			 sTotalTime += interval; 
-			Log.e("SpeedTest" , " Parsed a " + empty.getClass().getSimpleName() 
-						+ " in " + interval + " ms (time total " + sTotalTime + " ms)");
 			return ret;
-
 		}
 	}
 }

@@ -122,7 +122,6 @@ class LoginSessionParser implements IParser<LoginSession> {
 		final ParserUtils p = new ParserUtils(jo);
 		long sTotalTime = 0;
 		LoginSession obj = (LoginSession) empty;
-		if (PARSER) Log.i("parser debugging", "Parsing " + empty.getClass().getSimpleName());
 		try {
 			
 			obj.mSessionId = p.requireString("user_auth_hash");
@@ -140,16 +139,8 @@ class LoginSessionParser implements IParser<LoginSession> {
 			
 		} catch (Exception e) {
 			ret = false;
-			if (PARSER)
-				Log.e("parser debugging", e.getMessage(), e);
 		}
 		long interval = (System.currentTimeMillis() - startTime);
-		if (PARSER)
-			sTotalTime += interval;
-		if (PARSER)
-			Log.e("SPEEDTEST", "Parsed a " + empty.getClass().getSimpleName()
-					+ " in " + interval + "ms (time total " + sTotalTime
-					+ "ms)");
 		return ret;
 	}
 }
