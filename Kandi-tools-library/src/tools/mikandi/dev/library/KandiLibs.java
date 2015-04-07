@@ -111,12 +111,9 @@ public class KandiLibs {
 		String mSecret = uio.getSecretKey();
 		String mAppId = uio.getAppId();
 
-		if (debug)
-			Log.i("DEBUGGING XML ERROR: ", "Secret key  " + mSecret
-					+ " and appid " + mAppId);
+		if (debug) Log.i("DEBUGGING XML ERROR: ", "Secret key  " + mSecret	+ " and appid " + mAppId);
 		Intent mIntent = new Intent(act, LoginActivity.class);
-		if (debug)
-			Log.i("DEBUGGING XML ERROR: ", "Login Intent created");
+		if (debug) Log.i("DEBUGGING XML ERROR: ", "Login Intent created");
 		mIntent.putExtra(sSecret, mSecret);
 		mIntent.putExtra(sAppId, mAppId);
 		if (debug)
@@ -361,7 +358,6 @@ public class KandiLibs {
 			public void onNoPurchases() {
 				setOwned(false);
 				if (debug) Log.e("Retreiving Purchase History " , "No purchases found");
-				
 			}
 		});
 		

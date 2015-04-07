@@ -43,7 +43,6 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 	///
 	/// Accessors
 	///
-
 	public String getToken() {
 		return this.mToken;
 	}
@@ -55,7 +54,6 @@ public class AuthorizePurchaseReturnable extends AAppReturnable {
 	///
 	/// IReturnable Methods
 	///
-
 	@Override
 	public IParser<? extends IReturnable> getParser() {
 		return new AuthorizePurchaseReturnableParser();
