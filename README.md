@@ -1,3 +1,14 @@
+**************************** Please use our bitbucket repo version of kandibilling **********************
+
+https://bitbucket.org/mikandi/mikandi-inapp-library/overview
+
+
+********************************************************************************************************
+
+
+
+
+
 MiKandi in-app library v1.0.0
 
 v1.0.0 features (all in-app): 
