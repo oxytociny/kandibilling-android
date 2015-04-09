@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 MiKandi in-app library v1.0.1
 
 v1.0.1 - Updates!
@@ -7,23 +7,6 @@ v1.0.1 - Updates!
 - Removed unnessesary logging
 - Removed the auto-complete email list in password reset as it requured a get accounts permission from the device. 
 
-
-
-
-=======
-**************************** Please use our bitbucket repo version of kandibilling **********************
-
-https://bitbucket.org/mikandi/mikandi-inapp-library/overview
-
-
-********************************************************************************************************
-
-
-
-
-
-MiKandi in-app library v1.0.0
->>>>>>> 1b6800a5d35e5d15e59bee89bf3658c23ff3f4fa
 
 v1.0.0 features (all in-app): 
 
