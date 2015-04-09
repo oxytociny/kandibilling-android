@@ -29,11 +29,9 @@ There are extensive documentation for the library that can be found here: http:/
 
 and an example app created to allow developers to see the functionality of the library in action here: https://github.com/mikandi/kandibilling-android-example
 
-<<<<<<< HEAD
-**Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
-=======
+
 **Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
 
 Future Features:
 - Email for suggestions - Mike@mikandi.com
->>>>>>> 1b6800a5d35e5d15e59bee89bf3658c23ff3f4fa
+
