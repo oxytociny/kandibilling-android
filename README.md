@@ -6,7 +6,7 @@ v1.0.1 - Updates!
 - added a new call back for no purchases made by user
 - Removed unnessesary logging
 - Removed the auto-complete email list in password reset as it requured a get accounts permission from the device. 
-
+- Fixed types in this document
 
 v1.0.0 features (all in-app): 
 
