@@ -19,4 +19,5 @@
     <dimen name = "dimen_webview_width">300dip</dimen>
     
 	<dimen name="min_details_image_size">150dip</dimen>
+	
 </resources>

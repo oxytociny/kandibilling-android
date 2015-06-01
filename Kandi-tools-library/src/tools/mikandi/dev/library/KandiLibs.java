@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import tools.mikandi.dev.ads.fullScreenActivity;
 import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
@@ -95,6 +96,16 @@ public class KandiLibs {
 
 	// -------------------------------------------------------- Buy Gold Activity End  --------------------------------------------------------------
 
+	public static final void requestAdTest(final Activity act) { 
+		
+		Intent mIntent = new Intent(act.getApplicationContext(), fullScreenActivity.class); 
+		act.startActivity(mIntent);
+		
+	}
+	
+	
+	
+	
 	// ------------------------------------------------------Login Activity----------------------------------------------------------------------------------
 	/**
 	 * this is the function that is to be started that starts the login activity, no call back is needed as there is a within this 
