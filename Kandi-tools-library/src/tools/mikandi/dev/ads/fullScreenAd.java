@@ -1,10 +1,16 @@
 package tools.mikandi.dev.ads;
 
 
+import tools.mikandi.dev.library.KandiLibs;
+import tools.mikandi.dev.utils.UserInfoObject;
+
 import com.mikandi.developertools.R;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,42 +20,61 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class fullScreenActivity extends Activity {
+public class fullScreenAd extends Activity   {
 
 	WebView wv;
+	String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954&hn=1587633";
+	ImageView v;
+	RelativeLayout rl;
+	OnFullScreenAdDisplayedListener ad;
 	
-	@Override
 	public void finish() {
+		this.ad.AdFinished();
 		super.finish();
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		getActionBar().hide();
 		setContentView(R.layout.fullscreen);
-		Intent i = getIntent(); 
-		
+
+		rl = (RelativeLayout) findViewById(R.id.relative_layout);
 		//String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954";
-		String url = "http://fap.ninja/testad";
 		
-		if (i.hasCategory("ref")) { 
-			url = url + "&hn=1587633";
+		this.ad = UserInfoObject.getInstance(this).getAdListener();
+		
+		if (ad == null) { 
+			Log.e("fullScreenAd" , "No listener instantiated , make sure to setfullScreenAdDisplayedListener "); 
 		}
 		
+	
+		
+		rl.setBackgroundColor(R.color.black);
+
 		wv = (WebView) findViewById(R.id.webview);
+		v = (ImageView) findViewById(R.id.btn_quit);
 		wv.setScrollContainer(false);
 		wv.setVerticalScrollBarEnabled(false);
 		wv.setHorizontalScrollBarEnabled(false);
 		wv.getSettings().setLoadWithOverviewMode(true);
+		wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 	    wv.getSettings().setUseWideViewPort(true);
 	    wv.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-	    wv.getSettings().setJavaScriptEnabled(true);
+	   	    
+	    wv.setInitialScale(1) ; 
+	    if (Build.VERSION.SDK_INT >= 11){
+	        wv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+	        // this stops a background glitch on nexus phones 
+	    }
+	    
 	    wv.loadUrl(url);	
+	    
 		
-		ImageView v = (ImageView) findViewById(R.id.btn_quit);
 		v.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -69,8 +94,12 @@ public class fullScreenActivity extends Activity {
 		super.onPostResume();
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onResume() {
 		super.onResume();
+//		v.setVisibility(View.VISIBLE);
+	//	wv.setVisibility(View.VISIBLE);
+		rl.setBackgroundColor(R.color.white);
 	}	
 }

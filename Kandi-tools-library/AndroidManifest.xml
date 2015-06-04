@@ -20,7 +20,7 @@
         android:label="@string/app_name" >
         <activity 
             android:name = "tools.mikandi.dev.ads.fillScreenActivity"
-            android:label="Full Screen Ad">            
+            android:label="Full Screen Ad" >            
         </activity>
         <activity 
             android:name = "tools.mikandi.dev.login.LoginActivity"

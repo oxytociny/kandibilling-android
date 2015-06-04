@@ -1,6 +1,5 @@
 package tools.mikandi.dev.library;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -13,7 +12,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
-import tools.mikandi.dev.ads.fullScreenActivity;
+import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
+import tools.mikandi.dev.ads.fullScreenAd;
 import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
@@ -47,7 +47,7 @@ public class KandiLibs {
 	private static OnValidationListener sValidate = null;
 	private static onUserVerificationListener sOnUserVerification = null;
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
-	
+	private static OnFullScreenAdDisplayedListener sOnFullScreenAdDisplayedListener = null;
 	/**
 	 * 
 	 * Welcome to Kandilibs!
@@ -96,15 +96,15 @@ public class KandiLibs {
 
 	// -------------------------------------------------------- Buy Gold Activity End  --------------------------------------------------------------
 
-	public static final void requestAdTest(final Activity act) { 
+	public static String adListener = "adlistener";
+	public static final void requestAdTest(final Activity act, OnFullScreenAdDisplayedListener l) { 
 		
-		Intent mIntent = new Intent(act.getApplicationContext(), fullScreenActivity.class); 
+		Intent mIntent = new Intent(act.getApplicationContext(), fullScreenAd.class);
+		mIntent.putExtra(adListener, l);
 		act.startActivity(mIntent);
-		
 	}
 	
-	
-	
+
 	
 	// ------------------------------------------------------Login Activity----------------------------------------------------------------------------------
 	/**

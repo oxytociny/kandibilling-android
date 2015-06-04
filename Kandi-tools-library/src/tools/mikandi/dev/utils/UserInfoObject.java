@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
 import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.LoginResult;
 import tools.mikandi.dev.login.LoginStorageUtils;
@@ -28,8 +29,18 @@ public class UserInfoObject {
 	private static Boolean hasInstance = false;
 	private static boolean hasLogin = false;
 	private static Context myContext = null;
-
+	
+	private OnFullScreenAdDisplayedListener adListener = null;
+	
 	public UserInfoObject() {
+	}
+	
+	public void setAdListener(OnFullScreenAdDisplayedListener a) { 
+		this.adListener = a;
+	}
+	
+	public OnFullScreenAdDisplayedListener getAdListener() { 
+		return this.adListener;
 	}
 
 	public static UserInfoObject getInstance(final Context context) {

@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 MiKandi in-app library v1.0.1
 
+<<<<<<< HEAD
 v1.0.1 - Updates!
 - Fixed null pointer 
 - added a new call back for no purchases made by user
@@ -50,6 +51,12 @@ and an example app created to allow developers to see the functionality of the l
 **Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
 =======
 **Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
+=======
+**We have ported this repo to github and will be removing it from bitbucket soon**
+- Current version of the library https://github.com/mikandi/kandibilling-android
+- Example application: https://github.com/mikandi/kandibilling-android-example
+- Extensive Library documentation: http://tools.mikandi.com/confluence/display/KANDI/KandiLibs+Documentation
+>>>>>>> af89afde27fbc957894385345934d407c49d9500
 
 Future Features:
 - Email for suggestions - Mike@mikandi.com
