@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 MiKandi in-app library v1.0.1
 
 <<<<<<< HEAD
@@ -7,24 +7,7 @@ v1.0.1 - Updates!
 - added a new call back for no purchases made by user
 - Removed unnessesary logging
 - Removed the auto-complete email list in password reset as it requured a get accounts permission from the device. 
-
-
-
-
-=======
-**************************** Please use our bitbucket repo version of kandibilling **********************
-
-https://bitbucket.org/mikandi/mikandi-inapp-library/overview
-
-
-********************************************************************************************************
-
-
-
-
-
-MiKandi in-app library v1.0.0
->>>>>>> 1b6800a5d35e5d15e59bee89bf3658c23ff3f4fa
+- Fixed typos in this document
 
 v1.0.0 features (all in-app): 
 
@@ -47,9 +30,7 @@ There are extensive documentation for the library that can be found here: http:/
 
 and an example app created to allow developers to see the functionality of the library in action here: https://github.com/mikandi/kandibilling-android-example
 
-<<<<<<< HEAD
-**Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
-=======
+
 **Please note that if you are too use the example application you will need to enter your own secret key and appid of your application into the Android manifest**
 =======
 **We have ported this repo to github and will be removing it from bitbucket soon**
@@ -60,4 +41,4 @@ and an example app created to allow developers to see the functionality of the l
 
 Future Features:
 - Email for suggestions - Mike@mikandi.com
->>>>>>> 1b6800a5d35e5d15e59bee89bf3658c23ff3f4fa
+
