@@ -35,7 +35,7 @@ public class UserInfoObject {
 	public UserInfoObject() {
 	}
 	
-	public void setAdListener(OnFullScreenAdDisplayedListener a) { 
+	public void setFullScreenAdListener(OnFullScreenAdDisplayedListener a) { 
 		this.adListener = a;
 	}
 	

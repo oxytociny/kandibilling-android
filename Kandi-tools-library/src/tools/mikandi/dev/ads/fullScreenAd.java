@@ -52,8 +52,6 @@ public class fullScreenAd extends Activity   {
 			Log.e("fullScreenAd" , "No listener instantiated , make sure to setfullScreenAdDisplayedListener "); 
 		}
 		
-	
-		
 		rl.setBackgroundColor(R.color.black);
 
 		wv = (WebView) findViewById(R.id.webview);
