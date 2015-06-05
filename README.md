@@ -1,6 +1,10 @@
 
 MiKandi in-app library v1.0.1
 
+
+v1.0.2 
+- added full screen ad's for future ad-integration
+
 v1.0.1 - Updates!
 - Fixed null pointer 
 - added a new call back for no purchases made by user
