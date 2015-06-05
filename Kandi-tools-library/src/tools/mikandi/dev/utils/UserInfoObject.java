@@ -42,6 +42,7 @@ public class UserInfoObject {
 	public OnFullScreenAdDisplayedListener getAdListener() { 
 		return this.adListener;
 	}
+	
 
 	public static UserInfoObject getInstance(final Context context) {
 

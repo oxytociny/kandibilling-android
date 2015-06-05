@@ -23,16 +23,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class fullScreenAd extends Activity   {
+public class FullScreenAd extends Activity   {
 
 	WebView wv;
 	String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954&hn=1587633";
 	ImageView v;
 	RelativeLayout rl;
-	OnFullScreenAdDisplayedListener ad;
+	OnFullScreenAdDisplayedListener mListener;
 	
 	public void finish() {
-		this.ad.AdFinished();
+		if (this.mListener != null) this.mListener.AdFinished();
+		UserInfoObject.getInstance(this).setFullScreenAdListener(null);   // remove listener once closed. 
 		super.finish();
 	}
 
@@ -46,14 +47,14 @@ public class fullScreenAd extends Activity   {
 		rl = (RelativeLayout) findViewById(R.id.relative_layout);
 		//String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954";
 		
-		this.ad = UserInfoObject.getInstance(this).getAdListener();
+		this.mListener = UserInfoObject.getInstance(this).getAdListener();
 		
-		if (ad == null) { 
+		if (mListener == null) { 
 			Log.e("fullScreenAd" , "No listener instantiated , make sure to setfullScreenAdDisplayedListener "); 
+			finish();
 		}
 		
 		rl.setBackgroundColor(R.color.black);
-
 		wv = (WebView) findViewById(R.id.webview);
 		v = (ImageView) findViewById(R.id.btn_quit);
 		wv.setScrollContainer(false);
@@ -71,13 +72,10 @@ public class fullScreenAd extends Activity   {
 	    }
 	    
 	    wv.loadUrl(url);	
-	    
-		
-		v.setOnClickListener(new OnClickListener() {
+	    v.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "Quit testing", Toast.LENGTH_SHORT).show(); 
 				finish();
 			}});	
 	}
