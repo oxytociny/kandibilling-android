@@ -12,8 +12,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import tools.mikandi.dev.ads.FullScreenAd;
 import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
-import tools.mikandi.dev.ads.fullScreenAd;
 import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
@@ -99,7 +99,7 @@ public class KandiLibs {
 	public static String adListener = "adlistener";
 	public static final void requestAdTest(final Activity act, OnFullScreenAdDisplayedListener l) { 
 		
-		Intent mIntent = new Intent(act.getApplicationContext(), fullScreenAd.class);
+		Intent mIntent = new Intent(act.getApplicationContext(), FullScreenAd.class);
 		mIntent.putExtra(adListener, l);
 		act.startActivity(mIntent);
 	}
