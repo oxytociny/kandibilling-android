@@ -38,6 +38,15 @@ and an example app created to allow developers to see the functionality of the l
 
 - Extensive Library documentation: http://tools.mikandi.com/confluence/display/KANDI/KandiLibs+Documentation
 
+Future Improvements 
+- Pop-up dialog for buy gold transactions 
+- Improve call back's for activities
+- Testing framework 
+
+
+
+
+
 
 Future Features:
 - Email for suggestions - Mike@mikandi.com
