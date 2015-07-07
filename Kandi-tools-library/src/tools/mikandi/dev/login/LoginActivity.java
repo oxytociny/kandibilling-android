@@ -162,7 +162,7 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 	 * com.mikandi.android.v4.listeners.OnLoginResultListener#onLoginSuccess
 	 * (com.mikandi.android.lib.v4.LoginResult)
 	 */
-	public void onLoginSuccess(LoginResult result) {
+	public void onLoginSuccess(LibraryLoginResult result) {
 		dismissDialog();
 		final Context context = getApplicationContext();
 		LoginStorageUtils.setLogin(context, result);

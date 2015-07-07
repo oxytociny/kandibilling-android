@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import tools.mikandi.dev.login.AAppReturnable;
-import tools.mikandi.dev.login.LoginResult;
+import tools.mikandi.dev.login.LibraryLoginResult;
 import tools.mikandi.dev.login.LoginStorageUtils;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -166,7 +166,7 @@ public final class MiKandiUtils {
 	
 	public static Map<String, String> getUserAuthArgs(final Context ctx) {
 		final Map<String, String> ret = new HashMap<String, String>();
-		final LoginResult lr = LoginStorageUtils.getLogin(ctx);
+		final LibraryLoginResult lr = LoginStorageUtils.getLogin(ctx);
 		if (lr == null) {
 			return ret;
 		}

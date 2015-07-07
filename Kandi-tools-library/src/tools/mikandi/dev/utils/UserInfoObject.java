@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
 import tools.mikandi.dev.library.KandiLibs;
-import tools.mikandi.dev.login.LoginResult;
+import tools.mikandi.dev.login.LibraryLoginResult;
 import tools.mikandi.dev.login.LoginStorageUtils;
 
 /**
@@ -60,14 +60,14 @@ public class UserInfoObject {
 						ApplicationInfo ai2 = context.getPackageManager()
 								.getApplicationInfo(context.getPackageName(),
 										PackageManager.GET_META_DATA);
-						Object manifest_appid = (Object) ai2.metaData
-								.get(KandiLibs.sAppId);
-						Object manifest_secret = (Object) ai2.metaData
-								.get(KandiLibs.sSecret);
-
+						Object manifest_appid = (Object) ai2.metaData.get(KandiLibs.sAppId);
+						Object manifest_secret = (Object) ai2.metaData.get(KandiLibs.sSecret);
+						Object manifest_publisherid = (Object) ai2.metaData.get(KandiLibs.sPublisherId); 
+						
 						HashMap<String, String> hm = new HashMap<String, String>();
-						hm.put("appid", manifest_appid.toString());
-						hm.put("secretkey", manifest_secret.toString());
+						if (manifest_publisherid != null) hm.put(KandiLibs.sPublisherId , manifest_publisherid.toString());
+						if (manifest_appid != null) hm.put(KandiLibs.sAppId, manifest_appid.toString());
+						if (manifest_secret != null) hm.put(KandiLibs.sSecret , manifest_secret.toString());
 						setHashMap(hm);
 
 					} catch (Exception E) {
@@ -81,7 +81,7 @@ public class UserInfoObject {
 	}
 
 
-	private boolean getLoginStatus() {	
+	public boolean getLoginStatus() {	
 		final boolean loginStatus = (LoginStorageUtils.getLogin(myContext) != null) ? true : false;
 		return loginStatus;
 	}
@@ -97,30 +97,29 @@ public class UserInfoObject {
 		mHashMap = hm;
 	}
 
-	public void setLoginResult(LoginResult lr) {
+	public void setLoginResult(LibraryLoginResult lr) {
 		if (KandiLibs.debug) Log.i("should be setting login result", "about to print");
 		LoginStorageUtils.setLogin(myContext, lr);
 	}
 
-	public LoginResult getLoginResult() { 
+	public LibraryLoginResult getLoginResult() { 
 		return LoginStorageUtils.getLogin(myContext);
 	}
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder("printing UIO : ");
-		final LoginResult tempLoginVar = getLoginResult();
+		final LibraryLoginResult tempLoginVar = getLoginResult();
 		
 		if (tempLoginVar == null) {
 			sb.append("LoginResult is null");
 
 		} else {
 			sb.append("LoginResult is : ").append(tempLoginVar.toString());
+		
 		}
-
-		sb.append("HashMap Vals - appid: ").append(
-				mHashMap.get(KandiLibs.sAppId));
-		sb.append("HashMap Vals - secretkey: ").append(
-				mHashMap.get(KandiLibs.sSecret));
+		sb.append("HashMap Vals - appid: ").append(mHashMap.get(KandiLibs.sAppId))
+		.append("HashMap Vals - secretkey: ").append(mHashMap.get(KandiLibs.sSecret))
+		.append("HashMap Vals - Publisher id:").append(mHashMap.get(KandiLibs.sPublisherId));
 		return sb.toString();
 	}
 
@@ -128,15 +127,26 @@ public class UserInfoObject {
 		return UserInfoObject.mHashMap;
 	}
 
+	/**
+	 *  this may return null if user isn't logged in, i would check first 
+	 */
+	public String getUsername() { 	
+		return LoginStorageUtils.getLogin(myContext).getUsername();
+	}
+	
 	public String getAppId() {
-		return fromAppDetails(KandiLibs.sAppId);
+		return fromManifest(KandiLibs.sAppId);
 	}
 
 	public String getSecretKey() {
-		return fromAppDetails(KandiLibs.sSecret);
+		return fromManifest(KandiLibs.sSecret);
 	}
 
-	private String fromAppDetails(String param) {
+	public String getPublisherId() { 
+		return fromManifest(KandiLibs.sPublisherId);
+	}
+	
+	private String fromManifest(String param) {
 		return UserInfoObject.mHashMap.get(param);
 	}
 	

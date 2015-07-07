@@ -4,7 +4,10 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import tools.mikandi.dev.library.KandiLibs;
+import tools.mikandi.dev.utils.ParserUtils;
 import android.content.Context;
 import android.util.Log;
 
@@ -22,7 +25,6 @@ public class UserLoginReturnable extends AAppReturnable {
 	// /
 	// / Fields
 	// /
-
 	@Field(type = Field.Type.TEXT, constraint = Field.Constraint.NOT_NULL, json_name = "user_auth_hash")
 	protected String mAuthHash;
 
@@ -44,8 +46,12 @@ public class UserLoginReturnable extends AAppReturnable {
 	@Field(type = Field.Type.TEXT, json_name = "last_name", constraint = Field.Constraint.NONE)
 	protected String mLastName;
 
+	protected String mUsername; 
 	
 	
+	protected int mUserBalance;
+	
+	protected String mDisplayName;
 
 	public String toString() { 
 		StringBuilder sb = new StringBuilder(); 
@@ -60,7 +66,6 @@ public class UserLoginReturnable extends AAppReturnable {
 	// /
 	// / Accessors
 	// /
-
 	public boolean isValid() {
 		return System.currentTimeMillis() < this.mExpires;
 	}
@@ -69,6 +74,10 @@ public class UserLoginReturnable extends AAppReturnable {
 		return this.mAuthHash;
 	}
 
+	public String getUsername() { 
+		return this.mUsername;
+	}
+		
 	public int getUserId() {
 		return this.mUserId;
 	}
@@ -82,20 +91,29 @@ public class UserLoginReturnable extends AAppReturnable {
 	}
 
 	public String getDisplayName() {
+		if (mDisplayName != null) { 
+			return mDisplayName;
+		} 
+		
 		final boolean first = this.mFirstName == null ? false : this.mFirstName
 				.length() > 1;
-		final boolean last = this.mLastName == null ? false : this.mLastName
-				.length() > 1;
+		final boolean last = this.mLastName == null ? false : this.mLastName.length() > 1;
+		
+		if (first && last) { 
+			mDisplayName = this.mFirstName + " " + this.mLastName;
+		}
+		
 		if (!first && !last) {
-			return null;
+			mDisplayName = null;
 		}
 		if (!last) {
-			return this.mFirstName;
+			mDisplayName = this.mFirstName;
 		}
 		if (!first) {
-			return this.mLastName;
+			mDisplayName = this.mLastName;
 		}
-		return this.mFirstName + " " + this.mLastName;
+		
+		return mDisplayName;
 	}
 
 	// /
@@ -104,7 +122,7 @@ public class UserLoginReturnable extends AAppReturnable {
 
 	@Override
 	public IParser<? extends IReturnable> getParser() {
-		return new AutoParser<UserLoginReturnable>();
+		return new UserLoginParser();
 	}
 
 	@Override
@@ -127,4 +145,38 @@ public class UserLoginReturnable extends AAppReturnable {
 		return new EmptyCache<UserLoginReturnable>();
 	}
 
+	
+	
+	class UserLoginParser implements IParser<UserLoginReturnable> {
+		
+		private boolean PARSER = false;
+
+		public <T> boolean parse(JSONObject jo, T empty) {
+			boolean ret = true;
+			long startTime = System.currentTimeMillis();
+			final ParserUtils p = new ParserUtils(jo);
+			long sTotalTime = 0;
+			UserLoginReturnable obj = (UserLoginReturnable) empty;
+			try {
+				
+				obj.mUsername = p.loadString("username", null);
+				obj.mUserBalance = p.loadInteger("point_balance", null);
+				obj.mUserId = p.loadInteger("user_id", null);
+				obj.mAuthHash = p.loadString("user_auth_hash", null); 
+				obj.mFirstName = p.loadString("first_name", null); 
+				obj.mLastName = p.loadString("last_name", null); 
+				
+				if (jo.has("purchases")){
+					obj.mPurchases = p.loadStringList("purchases", (String[]) null);
+				}
+				
+			} catch (Exception e) {
+				ret = false;
+			}
+			long interval = (System.currentTimeMillis() - startTime);
+			return ret;
+		}
+	}
+	
+	
 }

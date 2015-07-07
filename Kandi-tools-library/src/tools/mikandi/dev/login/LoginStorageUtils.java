@@ -3,6 +3,7 @@ package tools.mikandi.dev.login;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import tools.mikandi.dev.login.LibraryLoginResult;
 
 public final class LoginStorageUtils {
 	private static final String sName = "kb-login";
@@ -12,7 +13,9 @@ public final class LoginStorageUtils {
 	private static final String sUAHash = "user-auth-hash";
 	private static final String sUAExpires = "user-auth-expires";
 	private static final String sUADisplayName = "user-display-name";
-
+	private static final String sUsername = "username";
+	
+	
 	public static boolean isLoggedIn(final Context ctx) {
 		final SharedPreferences sp = ctx.getSharedPreferences(sName, 0);
 		if (!sp.contains(sLogin)) {
@@ -31,14 +34,14 @@ public final class LoginStorageUtils {
 		ctx.getSharedPreferences(sName, 0).edit().clear().commit();
 	}
 
-	public static void setLogin(Context ctx, final LoginResult lr) {
+	public static void setLogin(Context ctx, final LibraryLoginResult lr) {
 		final SharedPreferences.Editor ed = ctx.getSharedPreferences(sName, 0)
 				.edit();
 		ed.putBoolean(sLogin, true);
 		ed.putInt(sUid, lr.mUserId);
 		ed.putString(sUAExpires, lr.getUserAuthExpires());
 		ed.putString(sUAHash, lr.getUserAuthHash());
-		ed.putString(sUADisplayName, lr.getDisplayName());
+		ed.putString(sUsername, lr.getUsername());
 		final String[] tokens = lr.getTokens();
 		final int tlen = tokens.length;
 		ed.putInt(sCount, tlen);
@@ -48,7 +51,8 @@ public final class LoginStorageUtils {
 		ed.commit();
 	}
 
-	public static LoginResult getLogin(Context ctx) {
+	// Returns a library Login Result object, allowing user values to be retreived. 
+	public static LibraryLoginResult getLogin(Context ctx) {
 		if (!LoginStorageUtils.isLoggedIn(ctx)) {
 			return null;
 		}
@@ -61,13 +65,13 @@ public final class LoginStorageUtils {
 				tokens[i] = sp.getString(sCount + String.valueOf(i), null);
 			}
 		}
-		return new LoginResult(LoginResult.RESULT_LOGIN_SUCCESS, sp.getInt(
+		return new LibraryLoginResult(LibraryLoginResult.RESULT_LOGIN_SUCCESS, sp.getInt(
 				sUid, -1), tokens, sp.getString(sUAHash, null), sp.getString(
-				sUAExpires, null), sp.getString(sUADisplayName, "MiKandi User"));
+				sUAExpires, null), sp.getString(sUsername , null));
 	}
 
 	public static boolean containsAnyTokens(Context ctx) {
-		final LoginResult tempLogin = getLogin(ctx);
+		final LibraryLoginResult tempLogin = getLogin(ctx);
 		if (tempLogin.getTokens().length > 0) {
 			return true;
 		} else {
@@ -81,9 +85,9 @@ public final class LoginStorageUtils {
 	 * @param ctx
 	 * @param newestLr
 	 */
-	public static void updateTokens(Context ctx, LoginResult newestLr) {
+	public static void updateTokens(Context ctx, LibraryLoginResult newestLr) {
 		if (containsAnyTokens(ctx)) {
-			final LoginResult tempLogin = LoginStorageUtils.getLogin(ctx);
+			final LibraryLoginResult tempLogin = LoginStorageUtils.getLogin(ctx);
 			// swaps loginresult for newer one.
 			if (newestLr.getTokens().length > tempLogin.getTokens().length) {
 				LoginStorageUtils.setLogin(ctx, newestLr);
@@ -97,7 +101,7 @@ public final class LoginStorageUtils {
 	 * 
 	 */
 	public static void refreshToken(Context ctx, String[] newTokens) {
-		final LoginResult currentLR = LoginStorageUtils.getLogin(ctx);
+		final LibraryLoginResult currentLR = LoginStorageUtils.getLogin(ctx);
 		String[] currentLRTokens = currentLR.getTokens();
 
 		for (String s : newTokens) {

@@ -29,19 +29,18 @@ import android.webkit.JavascriptInterface;
 public class FullScreenAd extends Activity   {
 
 	WebView wv;
-	//String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954&hn=1587633";
-	String url = "http://fap.ninja/testad2";
+	String url = "http://as.sexad.net/as/pu?p=mikandi&";
 	ImageView v;
 	RelativeLayout rl;
 	OnFullScreenAdDisplayedListener mListener;
 	String AppIdVariable  = "cid";
+	String pubIdVar = "hn";
 	Context c;
 	WebAppinterface wai;
-	
-	
+
 	public void finish() {
-		wv.loadUrl("about:blank");
-		if (this.mListener != null) this.mListener.AdFinished();
+		if (wv != null)	wv.loadUrl("about:blank");
+		if (this.mListener != null) this.mListener.AdFinished(); 
 		UserInfoObject.getInstance(this).setFullScreenAdListener(null);   // remove listener once closed. 
 		super.finish();
 	}
@@ -50,14 +49,13 @@ public class FullScreenAd extends Activity   {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
+		
+		try {
 		getActionBar().hide();
 		setContentView(R.layout.fullscreen);
-
 		rl = (RelativeLayout) findViewById(R.id.relative_layout);
-		//String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954";
-		
+	
 		this.mListener = UserInfoObject.getInstance(this).getAdListener();
-		
 		if (mListener == null) { 
 			Log.e("fullScreenAd" , "No listener instantiated , make sure to setfullScreenAdDisplayedListener "); 
 			finish();
@@ -76,9 +74,9 @@ public class FullScreenAd extends Activity   {
 	   	wv.getSettings().setJavaScriptEnabled(true);
 
 	  	c = (Context) this;
-	   	
 	   	wai = new WebAppinterface(this);
 	   	wv.addJavascriptInterface(wai, "Android");
+	   	
 	   	wv.setWebViewClient(new WebViewClient() {
 	   		@Override
 	        public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -89,7 +87,6 @@ public class FullScreenAd extends Activity   {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				Log.i("onPageFinished" , "" + url);
 			}	        
 	    });
 	   	
@@ -99,8 +96,15 @@ public class FullScreenAd extends Activity   {
 	        // this stops a background glitch on nexus phones 
 	    }
 	    
+	    // http://as.sexad.net/as/pu?p=mikandi&v=3954&hn=1487872&cid=13083
 	    String appId = UserInfoObject.getInstance(this).getAppId();
-	//    url = new StringBuilder(url).append("&").append(AppIdVariable).append("=").append(appId).toString();
+	    String publisherId = UserInfoObject.getInstance(this).getPublisherId();
+	    
+	    url = new StringBuilder(url).
+	    		append("&").append(pubIdVar).append("=").append(publisherId).
+	    		append("&").append(AppIdVariable).append("=").append(appId)
+	    		.toString();
+	    
 	    wv.loadUrl(url);	
 	    v.setOnClickListener(new OnClickListener() {
 
@@ -108,17 +112,15 @@ public class FullScreenAd extends Activity   {
 			public void onClick(View v) {
 				finish();
 			}});	
+	    
+	}
+	    catch (Exception E) { 
+	    	E.printStackTrace();finish();
+	    }
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 
-	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-	}
+	
 
 	@SuppressLint("ResourceAsColor")
 	@Override
@@ -135,13 +137,19 @@ public class FullScreenAd extends Activity   {
 		public WebAppinterface(Context c) { 
 			this.mContext = c; 
 		}
+		
 		@JavascriptInterface
 		public void launch(String url) {
 			Log.i("WebAppInterface" , "url called" + url);
-			mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-					.parse(url)));
+			Uri u = Uri.parse(url);
+			
+			if (u == null){
+				Toast.makeText(mContext, "Bad url, can't open " , Toast.LENGTH_SHORT).show();
+				finish(); 
 			}
-
+			
+			mContext.startActivity(new Intent(Intent.ACTION_VIEW, u));
+		}
 	}
 	
 }

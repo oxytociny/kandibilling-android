@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 import tools.mikandi.dev.ads.FullScreenAd;
 import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
+import tools.mikandi.dev.inapp.AccountBalancePoint;
 import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
@@ -22,7 +23,7 @@ import tools.mikandi.dev.inapp.onPurchaseHistoryListener;
 import tools.mikandi.dev.inapp.onUserVerificationListener;
 import tools.mikandi.dev.login.AAppReturnable;
 import tools.mikandi.dev.login.LoginActivity;
-import tools.mikandi.dev.login.LoginResult;
+import tools.mikandi.dev.login.LibraryLoginResult;
 import tools.mikandi.dev.login.LoginStorageUtils;
 import tools.mikandi.dev.passreset.DefaultJSONAsyncTask;
 import tools.mikandi.dev.passreset.OnJSONResponseLoadedListener;
@@ -41,13 +42,17 @@ public class KandiLibs {
 	public static final boolean debug = true;
 	public static final String sAppId = "appid";
 	public static final String sSecret = "secretkey";
+	public static final String sPublisherId = "publisherid"; 
 	public static boolean ownedBoolean = false;
-	
+	public static boolean balanceloading = false;
 	private static onPurchaseHistoryListener sPurchaseHistory = null;
 	private static OnValidationListener sValidate = null;
 	private static onUserVerificationListener sOnUserVerification = null;
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
 	private static OnFullScreenAdDisplayedListener sOnFullScreenAdDisplayedListener = null;
+	private static OnJSONResponseLoadedListener<AccountBalancePoint> sOnJsonResponseListener = null;
+	
+	
 	/**
 	 * 
 	 * Welcome to Kandilibs!
@@ -96,15 +101,11 @@ public class KandiLibs {
 
 	// -------------------------------------------------------- Buy Gold Activity End  --------------------------------------------------------------
 
-	public static String adListener = "adlistener";
-	public static final void requestAdTest(final Activity act, OnFullScreenAdDisplayedListener l) { 
-		
-		Intent mIntent = new Intent(act.getApplicationContext(), FullScreenAd.class);
-		mIntent.putExtra(adListener, l);
-		act.startActivity(mIntent);
+	public static String adListener = "fullScreenadlistener";
+	public static final void requestFullScreenAd(Activity a, OnFullScreenAdDisplayedListener l) { 
+		Intent mIntent = new Intent(a, FullScreenAd.class);
+		a.startActivity(mIntent);
 	}
-	
-
 	
 	// ------------------------------------------------------Login Activity----------------------------------------------------------------------------------
 	/**
@@ -133,7 +134,11 @@ public class KandiLibs {
 
 	}
 	// ---------------------------------------------- Login Activity End----------------------------------------------------------------------------
-	// ---------------------------------------------- Purchase checking ------------------------
+	
+	// --------------------------------------------------- Retreiving balance 
+	
+	
+	
 	
 	// ----------------------------------------- End balance  -----------------------------------------
 	//----------------------------------------- Logout --------------------------------------------------------------------------------------
@@ -167,7 +172,7 @@ public class KandiLibs {
 			final OnValidationListener validateListener, String mToken) {
 
 		sValidate = validateListener;
-		LoginResult lr = uio.getLoginResult();
+		LibraryLoginResult lr = uio.getLoginResult();
 		Context context = uio.getContext();
 
 		if (lr == null) {
@@ -260,7 +265,7 @@ public class KandiLibs {
 			 OnAuthorizeInAppListener authInAppListener){
 		sAuthInAppListener = authInAppListener;
 		Context context = uio.getContext();
-		LoginResult lr = uio.getLoginResult();
+		LibraryLoginResult lr = uio.getLoginResult();
 		
 		if (lr == null) {
 			if (debug) Log.e("authInAppPurchase " , "error! login result is null");
@@ -339,7 +344,7 @@ public class KandiLibs {
 			return false;
 		}
 		if (uio.getLoginResult() != null){
-			LoginResult lr = uio.getLoginResult();
+			LibraryLoginResult lr = uio.getLoginResult();
 			
 			if (lr.getArrayListTokens() != null && lr.getArrayListTokens().contains(token)){
 				setOwned(true);
@@ -400,7 +405,7 @@ public class KandiLibs {
 		if (debug) Log.i("KandiLibs - RequestPurchaseHistory","method called");
 		
 		final Context context = uio.getContext();
-		LoginResult lr = uio.getLoginResult();
+		LibraryLoginResult lr = uio.getLoginResult();
 		sPurchaseHistory = purchaseHistoryListener;
 		
 		if (lr == null) {
@@ -501,11 +506,10 @@ public class KandiLibs {
 		}
 			
 		Context ctx = uio.getContext();
-		LoginResult lr = uio.getLoginResult();
+		LibraryLoginResult lr = uio.getLoginResult();
+		
 		if (debug) Log.i("Printing LoginResult", "" + lr);
-		
 		final HashMap<String, String> hm = new HashMap<String, String>();
-		
 		hm.put(AAppReturnable.USER_ID, lr.getUserIdString());
 		hm.put(AAppReturnable.APP_ID, uio.getAppId());
 		hm.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
@@ -532,11 +536,10 @@ public class KandiLibs {
 								}
 								else { // if json response is null
 									if (debug) Log.e("ValidateUserReturnable", "jsonResponse is null");
-									}
-							} catch (Exception E) {
-			if (debug) Log.e("error thrown in request User verification",	"Error is : "+ E);
-			
-						}
+								}
+					} catch (Exception E) {
+						if (debug) Log.e("error thrown in request User verification",	"Error is : "+ E);
+					}
 						}
 					}, hm).execute();
 
@@ -570,6 +573,10 @@ public class KandiLibs {
 	public static boolean checkInstaller(UserInfoObject uio) {	
 		return InstallerCheck.checkInstaller(uio.getContext());
 	}
+	
+	// -------------------------------------------- UserValueRetreival ----------------
+	
+	
 	// -------------------------------------------------- Random functions -----------------------------------------------------------------
 	// setters are used when we need to handle a owned variable inside a listener and can't reference a class var without setters.
 	private static void setOwned(boolean var) { 

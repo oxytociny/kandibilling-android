@@ -49,21 +49,25 @@ public class LoginAsyncTask extends JSONAsyncTask<UserLoginReturnable>
 		
 		// successful login:
 		final UserLoginReturnable ret = (UserLoginReturnable) result.getOne();
-		LoginResult loginResult = null;
+		LibraryLoginResult loginResult = null;
 		
 		//check for tokens
 		if (ret.getTokens() == null) 
 		{
 		loginResult =
-			new LoginResult(LoginResult.RESULT_LOGIN_SUCCESS, ret.getUserId(), null
-			, ret.getAuthHash(), ret.getAuthExpires(), ret.getDisplayName());
+			new LibraryLoginResult(LibraryLoginResult.RESULT_LOGIN_SUCCESS, ret.getUserId(), null
+			, ret.getAuthHash(), ret.getAuthExpires(), ret.getUsername());
 					
 		}
 		else {
 			// Sucessful login but with no tokens
 			loginResult =
-				new LoginResult(LoginResult.RESULT_LOGIN_SUCCESS, ret.getUserId(), ret.getTokens().toArray(
-				new String[ret.getTokens().size()]), ret.getAuthHash(), ret.getAuthExpires(), ret.getDisplayName());
+				new LibraryLoginResult(LibraryLoginResult.RESULT_LOGIN_SUCCESS
+						, ret.getUserId()
+						, ret.getTokens().toArray(new String[ret.getTokens().size()])
+						, ret.getAuthHash()
+						, ret.getAuthExpires()
+						, ret.getUsername());
 		}
 		
 		LoginStorageUtils.setLogin(mContext, loginResult);

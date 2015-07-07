@@ -11,7 +11,7 @@ import android.os.Parcelable;
  * 
  * @author MiKandi, LLC
  */
-public final class LoginResult implements Parcelable {
+public final class LibraryLoginResult implements Parcelable {
 
 	protected ArrayList<String> mTokens = new ArrayList<String>();
 
@@ -26,8 +26,6 @@ public final class LoginResult implements Parcelable {
 		return this.getTokens();
 	}
 
-	
-	
 	public void setArrayListTokens(ArrayList<String> myArrayList){
 		this.mTokens = myArrayList;
 	}
@@ -86,7 +84,7 @@ public final class LoginResult implements Parcelable {
 	@Override 
 	public String toString() { 
 		StringBuilder sb = new StringBuilder("Printing Login: ");
-		sb.append("username :").append(this.getDisplayName()); 
+		sb.append("username :").append(this.getUsername()); 
 		sb.append("UserId").append(this.getUserId());
 		sb.append("User Auth Hash :").append(this.mUserAuthHash);
 		sb.append("UserAuth Expires : " ).append(this.mUserAuthExpires);
@@ -132,15 +130,13 @@ public final class LoginResult implements Parcelable {
 		return mUserAuthExpires;
 	}
 	
-	protected String mDisplayName;
+	protected String mUsername;
 	
-	/**
-	 * Gets the name to call the user when referring to them
-	 */
-	public String getDisplayName() {
-		return this.mDisplayName;
+	public String getUsername() { 
+		return mUsername;
 	}
-
+	
+	
 	/**
 	 * There was an unspecified error in the login process.
 	 */
@@ -175,12 +171,12 @@ public final class LoginResult implements Parcelable {
 		}
 	}
 	
-	public LoginResult(int result, int user_id, String[] tokens, String userAuthHash, String userAuthExpires, String displayName) {
+	public LibraryLoginResult(int result, int user_id, String[] tokens, String userAuthHash, String userAuthExpires, String username) {
 		mResult = result;
 		mUserId = user_id;
 		mUserAuthHash = userAuthHash;
 		mUserAuthExpires = userAuthExpires;
-		mDisplayName = displayName;
+		mUsername = username;
 		if (tokens != null) {
 			for (String p : tokens) {
 				mTokens.add(p);
@@ -198,26 +194,26 @@ public final class LoginResult implements Parcelable {
 		dest.writeStringList(mTokens);
 		dest.writeString(mUserAuthHash);
 		dest.writeString(mUserAuthExpires);
-		dest.writeString(mDisplayName);
+		dest.writeString(mUsername);
 	}
 
-	private LoginResult(Parcel in) {
+	private LibraryLoginResult(Parcel in) {
 		mResult = in.readInt();
 		mUserId = in.readInt();
 		mTokens.clear();
 		in.readStringList(mTokens);
 		mUserAuthHash = in.readString();
 		mUserAuthExpires = in.readString();
-		mDisplayName = in.readString();
+		mUsername = in.readString(); 
 	}
 
-	public static final Parcelable.Creator<LoginResult> CREATOR = new Parcelable.Creator<LoginResult>() {
-		public LoginResult createFromParcel(Parcel in) {
-			return new LoginResult(in);
+	public static final Parcelable.Creator<LibraryLoginResult> CREATOR = new Parcelable.Creator<LibraryLoginResult>() {
+		public LibraryLoginResult createFromParcel(Parcel in) {
+			return new LibraryLoginResult(in);
 		}
 
-		public LoginResult[] newArray(int size) {
-			return new LoginResult[size];
+		public LibraryLoginResult[] newArray(int size) {
+			return new LibraryLoginResult[size];
 		}
 	};
 }
