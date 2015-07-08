@@ -1,4 +1,4 @@
-package tools.mikandi.dev.purchasehistory;
+package tools.mikandi.dev.purchase;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -7,10 +7,10 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import tools.mikandi.dev.inapp.ValidateUserReturnable;
 import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.AAppReturnable;
 import tools.mikandi.dev.utils.ParserUtils;
+import tools.mikandi.dev.validation.ValidateUserReturnable;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;

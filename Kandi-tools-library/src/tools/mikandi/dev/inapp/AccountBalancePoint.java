@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import tools.mikandi.dev.login.UserLoginReturnable;
 import tools.mikandi.dev.utils.GetDeviceAndUserInfo;
 import tools.mikandi.dev.utils.Logger;
 import tools.mikandi.dev.utils.ParserUtils;
@@ -21,6 +22,8 @@ import com.saguarodigital.returnable.IReturnable;
 import com.saguarodigital.returnable.IReturnableCache;
 import com.saguarodigital.returnable.annotation.Field;
 import com.saguarodigital.returnable.annotation.Type;
+import com.saguarodigital.returnable.defaultimpl.AutoParser;
+import com.saguarodigital.returnable.defaultimpl.EmptyCache;
 
 /**
  * @author rekaszeru
@@ -29,12 +32,6 @@ import com.saguarodigital.returnable.annotation.Type;
 
 @Type(version = 1, type = Type.JSONDataType.OBJECT)
 public class AccountBalancePoint implements IReturnable {
-
-	// TODO: Should this be a weak reference
-	// private AccountBalancePointCache mCache = null;
-	//
-	// Fields
-	//
 
 	@Field(json_name = "point_balance", type = Field.Type.NUMBER, constraint = Field.Constraint.NOT_NULL)
 	protected int mBalance;
@@ -69,10 +66,9 @@ public class AccountBalancePoint implements IReturnable {
 	// /
 	// / IReturnable Methods
 	// /
-
 	@Override
 	public IParser<? extends IReturnable> getParser() {
-		return new AccountBalencePointParser(); 
+		return new AutoParser<AccountBalancePoint>();
 	}
 
 	@Override
@@ -102,48 +98,9 @@ public class AccountBalancePoint implements IReturnable {
 		throw new CloneNotSupportedException();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.os.Parcelable#describeContents()
-	 */
-	
-
-	
-	private final class AccountBalencePointParser implements IParser<AccountBalancePoint> {
-		private long sTotalTime = 0;
-		private final String sPointBalence = "point_balance";
-		private final String sTimeStamp = "time_stamp";
-		private final String TAG = "AccountBalencePointParser"; 
-		
-		@Override
-		public <T> boolean parse(JSONObject jo, T empty) {
-			boolean ret = true; 
-			long startTime = System.currentTimeMillis();
-			final ParserUtils p = new ParserUtils(jo);
-			AccountBalancePoint obj = (AccountBalancePoint) empty;
-			final int fallBackBalance = -1; 
-			final int fallBackTimestamp = 0;
-			if (Logger.parserDebug) Log.d(TAG, "Parsing" + empty.getClass().getSimpleName());
-			
-			try {
-					obj.mBalance = p.loadInteger(sPointBalence, fallBackBalance);
-					obj.mTimestamp = p.loadLong(sTimeStamp, fallBackTimestamp);	
-			} catch (Exception e) {
-			 Log.e(TAG, e.getMessage(), e);
-		} 
-		
-		return ret; 
-
-		} 
-			}
-
-	
-	// Unusued aldebran function
 	@Override
-	public IReturnableCache<? extends IReturnable> getCache(Context arg0) {
-		return null;
+	public IReturnableCache<? extends IReturnable> getCache(Context ctx) {
+	return new EmptyCache<UserLoginReturnable>();
 	}
 
-
-				}
+}

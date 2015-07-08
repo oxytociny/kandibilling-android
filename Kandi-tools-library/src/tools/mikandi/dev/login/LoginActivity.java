@@ -166,7 +166,6 @@ public class LoginActivity extends Activity implements OnLoginResultListener, On
 		dismissDialog();
 		final Context context = getApplicationContext();
 		LoginStorageUtils.setLogin(context, result);
-		final Intent loginResultIntent = new Intent();
 		this.finish();
 	}
 

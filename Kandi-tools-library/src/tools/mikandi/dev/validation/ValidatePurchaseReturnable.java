@@ -1,4 +1,4 @@
-package tools.mikandi.dev.inapp;
+package tools.mikandi.dev.validation;
 
 import java.net.URLEncoder;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import tools.mikandi.dev.library.KandiLibs;
 import tools.mikandi.dev.login.AAppReturnable;
-import tools.mikandi.dev.purchasehistory.ListPurchasesReturnable;
+import tools.mikandi.dev.purchase.ListPurchasesReturnable;
 import tools.mikandi.dev.utils.ParserUtils;
 import android.content.Context;
 import android.util.Log;

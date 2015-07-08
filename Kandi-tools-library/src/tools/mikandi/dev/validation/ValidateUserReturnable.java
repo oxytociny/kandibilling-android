@@ -1,4 +1,4 @@
-package tools.mikandi.dev.inapp;
+package tools.mikandi.dev.validation;
 
 
 import java.util.Map;

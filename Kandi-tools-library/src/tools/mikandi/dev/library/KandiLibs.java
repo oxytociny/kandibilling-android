@@ -15,10 +15,9 @@ import android.widget.Toast;
 import tools.mikandi.dev.ads.FullScreenAd;
 import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
 import tools.mikandi.dev.inapp.AccountBalancePoint;
-import tools.mikandi.dev.inapp.AuthorizePurchaseReturnable;
 import tools.mikandi.dev.inapp.OnAuthorizeInAppListener;
 import tools.mikandi.dev.inapp.OnValidationListener;
-import tools.mikandi.dev.inapp.ValidateUserReturnable;
+import tools.mikandi.dev.inapp.onBuyGoldReturnListener;
 import tools.mikandi.dev.inapp.onPurchaseHistoryListener;
 import tools.mikandi.dev.inapp.onUserVerificationListener;
 import tools.mikandi.dev.login.AAppReturnable;
@@ -27,10 +26,12 @@ import tools.mikandi.dev.login.LibraryLoginResult;
 import tools.mikandi.dev.login.LoginStorageUtils;
 import tools.mikandi.dev.passreset.DefaultJSONAsyncTask;
 import tools.mikandi.dev.passreset.OnJSONResponseLoadedListener;
-import tools.mikandi.dev.purchasehistory.ListPurchasesReturnable;
+import tools.mikandi.dev.purchase.AuthorizePurchaseReturnable;
+import tools.mikandi.dev.purchase.ListPurchasesReturnable;
 import tools.mikandi.dev.utils.InstallerCheck;
 import tools.mikandi.dev.utils.UserInfoObject;
-import tools.mikandi.dev.inapp.ValidatePurchaseReturnable;
+import tools.mikandi.dev.validation.ValidatePurchaseReturnable;
+import tools.mikandi.dev.validation.ValidateUserReturnable;
 
 /**
  * The main KandiLibs class. All API calls use a method from this class.
@@ -50,8 +51,7 @@ public class KandiLibs {
 	private static onUserVerificationListener sOnUserVerification = null;
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
 	private static OnFullScreenAdDisplayedListener sOnFullScreenAdDisplayedListener = null;
-	private static OnJSONResponseLoadedListener<AccountBalancePoint> sOnJsonResponseListener = null;
-	
+	private static onBuyGoldReturnListener sOnBuyGoldReturn = null;
 	
 	/**
 	 * 
@@ -484,6 +484,59 @@ public class KandiLibs {
 	}
 	// --------------------------------------- End Purchase history--------------------------------------------------------------------------------------
 
+	// ------------------------------------------------ Gold Retreival ----------------------------------------------------
+	/**
+	 * This function returns -1 if the balance hasn't been retreived correctly. 
+	 * @param l
+	 * @param u
+	 */
+	public static void getBalance(final onBuyGoldReturnListener l , UserInfoObject u) { 
+		sOnBuyGoldReturn = l; 
+		final Context c = u.getContext(); 
+		LibraryLoginResult lr = u.getLoginResult();
+		
+		if (lr == null) { 
+		Toast.makeText(c, "Please log in first" , Toast.LENGTH_SHORT).show();
+		l.retreivedGold(-2);
+		return;
+		}
+		
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put(AAppReturnable.APP_ID, u.getAppId());
+		args.put(AAppReturnable.USER_ID, lr.getUserId() + "");
+		args.put(AAppReturnable.AUTH_HASH, lr.getUserAuthHash());
+		args.put(AAppReturnable.AUTH_EXPIRES, lr.getUserAuthExpires());
+		
+		try
+		{
+			new DefaultJSONAsyncTask<AccountBalancePoint>
+				(AccountBalancePoint.class, c	,new OnJSONResponseLoadedListener<AccountBalancePoint>(){
+
+					@Override
+					public void onJSONLoaded(
+							JSONResponse<AccountBalancePoint> jsonResponse) {
+						
+						if (jsonResponse.getCode() != 200) { 
+							l.retreivedGold(-1);
+						} else { 
+							AccountBalancePoint a = jsonResponse.getOne(); 
+							l.retreivedGold(a.getBalance());
+						}
+						
+					}}, args).execute();
+		}
+		catch (Exception e)
+		{
+			if (debug) Log.e("Gold balance Retreiveal " , " ", e);
+		}
+		
+		
+	}
+	
+	// ----------------------------------------------- End  Gold Retreival --------------------------------------------------------
+	
+	
+	
 	// ------------------------------------------------------ Verify User ---------------------------------------------------
 	/**
 	 * This will tell you whether or not the user has purchased the application from the MiKandi app store. 

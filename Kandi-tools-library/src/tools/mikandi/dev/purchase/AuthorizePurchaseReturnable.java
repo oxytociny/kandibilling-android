@@ -1,4 +1,4 @@
-package tools.mikandi.dev.inapp;
+package tools.mikandi.dev.purchase;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;

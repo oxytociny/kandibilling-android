@@ -150,4 +150,5 @@ public class UserInfoObject {
 		return UserInfoObject.mHashMap.get(param);
 	}
 	
+	
 }
