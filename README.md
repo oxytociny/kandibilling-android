@@ -1,5 +1,9 @@
 
-MiKandi in-app library v1.0.1
+MiKandi in-app library v1.0.3
+
+v1.0.3
+- Added publisher id and appid to full screen ad urls. 
+- Added ability to retreive username from a sucessful login. 
 
 
 v1.0.2 
