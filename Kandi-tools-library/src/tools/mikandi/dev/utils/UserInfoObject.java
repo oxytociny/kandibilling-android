@@ -57,17 +57,15 @@ public class UserInfoObject {
 				if (mHashMap == null) {
 					try {	
 						
-						ApplicationInfo ai2 = context.getPackageManager()
-								.getApplicationInfo(context.getPackageName(),
-										PackageManager.GET_META_DATA);
+						ApplicationInfo ai2 = context.getPackageManager().getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
 						Object manifest_appid = (Object) ai2.metaData.get(KandiLibs.sAppId);
 						Object manifest_secret = (Object) ai2.metaData.get(KandiLibs.sSecret);
 						Object manifest_publisherid = (Object) ai2.metaData.get(KandiLibs.sPublisherId); 
 						
 						HashMap<String, String> hm = new HashMap<String, String>();
-						if (manifest_publisherid != null) hm.put(KandiLibs.sPublisherId , manifest_publisherid.toString());
-						if (manifest_appid != null) hm.put(KandiLibs.sAppId, manifest_appid.toString());
-						if (manifest_secret != null) hm.put(KandiLibs.sSecret , manifest_secret.toString());
+						if (manifest_publisherid != null) 	hm.put(KandiLibs.sPublisherId , manifest_publisherid.toString());
+						if (manifest_appid != null) 		hm.put(KandiLibs.sAppId, manifest_appid.toString());
+						if (manifest_secret != null) 		hm.put(KandiLibs.sSecret , manifest_secret.toString());
 						setHashMap(hm);
 
 					} catch (Exception E) {
@@ -79,7 +77,6 @@ public class UserInfoObject {
 		}
 		return instance;
 	}
-
 
 	public boolean getLoginStatus() {	
 		final boolean loginStatus = (LoginStorageUtils.getLogin(myContext) != null) ? true : false;
@@ -149,6 +146,5 @@ public class UserInfoObject {
 	private String fromManifest(String param) {
 		return UserInfoObject.mHashMap.get(param);
 	}
-	
 	
 }
