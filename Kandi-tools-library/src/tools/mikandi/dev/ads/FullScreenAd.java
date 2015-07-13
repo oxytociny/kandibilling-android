@@ -51,7 +51,15 @@ public class FullScreenAd extends Activity   {
 		super.onCreate(savedInstanceState);	
 		
 		try {
-		getActionBar().hide();
+		
+		
+		
+		if (android.os.Build.VERSION.SDK_INT > 10){
+			if (getActionBar() != null){
+		   		getActionBar().hide();
+    			}
+		}
+		
 		setContentView(R.layout.fullscreen);
 		rl = (RelativeLayout) findViewById(R.id.relative_layout);
 	
