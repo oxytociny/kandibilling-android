@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import tools.mikandi.dev.ads.AdUtils;
 import tools.mikandi.dev.ads.FullScreenAd;
 import tools.mikandi.dev.ads.OnFullScreenAdDisplayedListener;
 import tools.mikandi.dev.inapp.AccountBalancePoint;
@@ -52,6 +53,14 @@ public class KandiLibs {
 	private static OnAuthorizeInAppListener sAuthInAppListener = null;	
 	private static OnFullScreenAdDisplayedListener sOnFullScreenAdDisplayedListener = null;
 	private static onBuyGoldReturnListener sOnBuyGoldReturn = null;
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 
@@ -101,11 +110,32 @@ public class KandiLibs {
 
 	// -------------------------------------------------------- Buy Gold Activity End  --------------------------------------------------------------
 
+	
+	// --------------------------------------------------------------- full ad's ---------------
 	public static String adListener = "fullScreenadlistener";
+	
 	public static final void requestFullScreenAd(Activity a, OnFullScreenAdDisplayedListener l) { 
 		Intent mIntent = new Intent(a, FullScreenAd.class);
 		a.startActivity(mIntent);
 	}
+	
+	public static final void requestFullScreenAd(Activity a, OnFullScreenAdDisplayedListener l , String[] niches) { 
+		Intent mIntent = new Intent(a, FullScreenAd.class); 
+		
+		
+		
+		
+		if (niches == null | niches.length < 1) { 
+			requestFullScreenAd(a, l);
+		} else { 
+			String n = AdUtils.getNiche(niches);
+			mIntent.putExtra(sNiche , n);
+			a.startActivity(mIntent);
+		}
+	
+	}
+	
+	// ---------------------------------------------------------- full ad's ------------------
 	
 	// ------------------------------------------------------Login Activity----------------------------------------------------------------------------------
 	/**
@@ -386,8 +416,7 @@ public class KandiLibs {
 	 * to determine what in-app purchases or access to premium content the user
 	 * has purchased.
 	 * 
-	 * There are two ways this can be used the first is that by modifying the
-	 * which_action variable, one use of this function is to retreive tokens
+	 * One use of this function is to retreive tokens
 	 * from the stored login result on the device, one use of function is to
 	 * retreive the list from the server.
 	 * 
@@ -639,4 +668,37 @@ public class KandiLibs {
 		return ownedBoolean;
 	}
 	// -------------------------------------------------End Random Functions ---------------------------		
+
+
+
+//---------------------------------- static var's for ad's -----------
+		public static String sEbony = "ebony";
+		public static String sBbw = "bbw";
+		public static String sTranny = "tranny";
+		public static String sGay = "gay";
+		public static String sTeen = "teen"; 
+		
+		public static String sAnal = "anal";
+		public static String sMature = "mature";
+		public static String sBrunette = "brunette";
+		public static String sBlonde = "blonde";
+		public static String sAsian = "asian"; 
+		
+		public static String sBigTits = "bigtits";
+		public static String sLatina = "latina"; 
+		public static String sLesbian = "lesbian";
+		public static String sCouples = "couples";
+		
+		public static String sNiche = "Niche";
+
+		
+		public static String[] niches  = { 
+			sEbony , sBbw , sTranny , sGay , sTeen , 
+			sAnal, sMature, sBrunette , sBlonde , sAsian , 
+			sBigTits , sLatina , sLesbian , sCouples
+		};
+// ----------------------------------------------------------
+
+
+
 }

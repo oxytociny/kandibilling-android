@@ -35,9 +35,11 @@ public class FullScreenAd extends Activity   {
 	OnFullScreenAdDisplayedListener mListener;
 	String AppIdVariable  = "cid";
 	String pubIdVar = "hn";
+	String nicheIdVar = "niche";
 	Context c;
 	WebAppinterface wai;
-
+	boolean adDebug = true;
+	
 	public void finish() {
 		if (wv != null)	wv.loadUrl("about:blank");
 		if (this.mListener != null) this.mListener.AdFinished(); 
@@ -99,12 +101,21 @@ public class FullScreenAd extends Activity   {
 	    // http://as.sexad.net/as/pu?p=mikandi&v=3954&hn=1487872&cid=13083
 	    String appId = UserInfoObject.getInstance(this).getAppId();
 	    String publisherId = UserInfoObject.getInstance(this).getPublisherId();
-	    
+	    String niche = null;
+	    niche = getIntent().getStringExtra(KandiLibs.sNiche);
+		
 	    url = new StringBuilder(url).
 	    		append("&").append(pubIdVar).append("=").append(publisherId).
 	    		append("&").append(AppIdVariable).append("=").append(appId)
 	    		.toString();
 	    
+	    if (niche != null) { 
+	    	// add niche to url; 
+	    	url = new StringBuilder(url).append("&").append(nicheIdVar).append("=").append(niche).toString();
+		    if (adDebug) Toast.makeText(this, "Showing niche : " + niche , Toast.LENGTH_SHORT).show(); 
+
+	    }
+	    if (adDebug) Log.i("Opening url to" , url);
 	    wv.loadUrl(url);	
 	    v.setOnClickListener(new OnClickListener() {
 
