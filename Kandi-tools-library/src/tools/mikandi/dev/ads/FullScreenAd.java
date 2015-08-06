@@ -29,7 +29,7 @@ import android.webkit.JavascriptInterface;
 public class FullScreenAd extends Activity   {
 
 	WebView wv;
-	String url = "http://as.sexad.net/as/pu?p=mikandi&";
+	String url = "http://as.sexad.net/as/pu?p=mikandi&v=3954";
 	ImageView v;
 	RelativeLayout rl;
 	OnFullScreenAdDisplayedListener mListener;
@@ -53,7 +53,15 @@ public class FullScreenAd extends Activity   {
 		super.onCreate(savedInstanceState);	
 		
 		try {
-		getActionBar().hide();
+		
+		
+		
+		if (android.os.Build.VERSION.SDK_INT > 10){
+			if (getActionBar() != null){
+		   		getActionBar().hide();
+    			}
+		}
+		
 		setContentView(R.layout.fullscreen);
 		rl = (RelativeLayout) findViewById(R.id.relative_layout);
 	
@@ -71,8 +79,8 @@ public class FullScreenAd extends Activity   {
 		wv.setHorizontalScrollBarEnabled(false);
 		wv.getSettings().setLoadWithOverviewMode(true);
 		wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-	    wv.getSettings().setUseWideViewPort(true);
-	    wv.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+	        wv.getSettings().setUseWideViewPort(true);
+	        wv.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 	   	wv.getSettings().setJavaScriptEnabled(true);
 
 	  	c = (Context) this;
