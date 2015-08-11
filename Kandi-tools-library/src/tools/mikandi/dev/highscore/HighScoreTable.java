@@ -1,4 +1,4 @@
-package tools.mikandi.dev.highscore;
+/*package tools.mikandi.dev.highscore;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -85,3 +85,4 @@ public class HighScoreTable implements OnJSONResponseLoadedListener<HighScoreObj
 	
 }
 
+*/

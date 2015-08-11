@@ -1,4 +1,4 @@
-package tools.mikandi.dev.highscore;
+/*package tools.mikandi.dev.highscore;
 
 import java.util.Map;
 
@@ -11,7 +11,6 @@ import com.saguarodigital.returnable.annotation.Type;
 import com.saguarodigital.returnable.annotation.Field.Constraint;
 import com.saguarodigital.returnable.defaultimpl.AutoParser;
 
-import tools.mikandi.dev.highscore.HighScoreUtils.SortOrder;
 import tools.mikandi.dev.utils.IReturnable;
 
 
@@ -30,7 +29,7 @@ public class HighScoreObject implements IReturnable, Comparable {
 	@Field(json_name = "score_value" , type = Field.Type.NUMBER)
 	int mScore;         // numerical score value
 	
-	/* 
+	 
 	 *	 			|----Goals----|  (scoretype - column header)
      * 				 1    score
 	 *  			 2    score
@@ -39,7 +38,7 @@ public class HighScoreObject implements IReturnable, Comparable {
 	 *   		     5    score
 	 *   			 6    score
 	 *   
-	 */
+	 
 	
 	SortOrder mSort = null;
 		
@@ -134,3 +133,4 @@ public class HighScoreObject implements IReturnable, Comparable {
 	}
 		
 }
+*/
