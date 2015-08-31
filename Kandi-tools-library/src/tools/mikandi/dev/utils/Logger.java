@@ -9,9 +9,9 @@ public abstract class Logger {
 	
 	public static final boolean registrationDebug = false;
 	public static final String regDebugString = "Registration Activity";
-	public static boolean isDebug = true;
+	public static boolean isDebug = false;
 	
-	public static final boolean parserdebug = true;
+	public static final boolean parserdebug = false;
 
 	
 }
