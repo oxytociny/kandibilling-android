@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_margin_large">24dip</dimen>
+    <dimen name="acc_button_main_horizontal_padding">40dip</dimen>
+    <dimen name="acc_button_main_vertical_padding">6dip</dimen>
+    <dimen name="acc_button_main_text_size">18sp</dimen>
+    <dimen name="acc_button_horizontal_padding">6dip</dimen>
+    <dimen name="acc_button_vertical_padding">8dip</dimen>
+    <dimen name="acc_button_text_size">17sp</dimen>
+    <dimen name="acc_margin_huge">72dip</dimen>
+    <dimen name="acc_margin_large">38dip</dimen>
+    <dimen name="acc_margin_medium">18dip</dimen>
+    <dimen name="acc_margin_small">8dip</dimen>
+    <dimen name="acc_item_padding">2dip</dimen>
+    <dimen name="acc_et_padding">4dip</dimen>   
+
+    
+    <dimen name = "dimen_webview_width">300dip</dimen>
+    
+	<dimen name="min_details_image_size">150dip</dimen>
+</resources>

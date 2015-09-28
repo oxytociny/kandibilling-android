@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!--  Blue Button -->
+    <color name="btn_blue_border_default">#eaeaea</color>
+    <color name="btn_blue_border_highlight">#dfdfc5</color>
+    <color name="btn_blue_default">#16a5d7</color>
+    <color name="btn_blue_focus_start">#13bbf5</color>
+    <color name="btn_blue_focus_end">#59c6ec</color>
+    <color name="btn_blue_press_start">#11b1e9</color>
+    <color name="btn_blue_press_end">#54bce1</color>
+    
+    <!-- Grey Button -->
+    <color name="btn_grey_border_default">#FDFDFD</color>
+    <color name="btn_grey_border_highlight">#FDFDFD</color>
+    <color name="btn_grey_default">#7C7C7C</color>
+    <color name="btn_grey_focus_start">#7C7C7C</color>
+    <color name="btn_grey_focus_end">#7C7C7C</color>
+    <color name="btn_grey_press_start">#7C7C7C</color>
+    <color name="btn_grey_press_end">#7C7C7C</color>
+    
+	<!-- Green Button -->
+    <color name="btn_green_border_default">#FDFDFD</color>
+    <color name="btn_green_border_highlight">#FDFDFD</color>
+    <color name="btn_green_default">#08B504</color>
+    <color name="btn_green_focus_start">#08B504</color>
+    <color name="btn_green_focus_end">#08B504</color>
+    <color name="btn_green_press_start">#08B504</color>
+    <color name="btn_green_press_end">#08B504</color>
+    
+	<!-- Menu Button -->
+    <color name="btn_menu_focus_top">#60A5A5A5</color>
+    <color name="btn_menu_focus_bottom">#60060606</color>
+    <color name="btn_menu_press_top">#60cccccc</color>
+    <color name="btn_menu_press_bottom">#60060606</color>
+
+    <!-- Who knows what these are for? -->
+    <color name="btn_ab_top">#16a5d7</color>
+    <color name="btn_ab_bottom">#060606</color>
+</resources>

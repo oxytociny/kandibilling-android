@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/inapp_loginbackground"
+	android:padding="@dimen/activity_margin_large" >
+
+	<TextView
+		android:id="@+id/OneTapReg_Welcome"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/acc_margin_medium"
+		android:text="@string/onetapreg_MiKandi_welcome"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="@color/white" />
+
+	<TextView
+		android:id="@+id/OneTapReg_AboutUs"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/OneTapReg_Welcome"
+		android:paddingBottom="@dimen/acc_et_padding"
+		android:text="@string/onetapreg_We_are_MiKandi"
+		android:layout_marginBottom="@dimen/acc_margin_small"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textColor="@color/white" />
+
+	<TextView
+		android:id="@+id/OneTapReg_EmailPrompt"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/OneTapReg_AboutUs"
+		android:text="@string/onetapreg_emailpromptString"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white" />
+
+	<TextView
+		android:id="@+id/OneTapReg_tapToEdit"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@id/OneTapReg_EmailPrompt"
+		android:layout_alignParentRight="true"
+		android:layout_marginTop="@dimen/acc_margin_medium"
+		android:text="@string/onetapreg_taptoEdit"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white" />
+
+	<AutoCompleteTextView
+		android:id="@+id/OneTapReg_EmailAutoComplete"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/OneTapReg_tapToEdit"
+		android:background="@color/white"
+		android:drawableRight="@drawable/droparrow"
+		android:inputType="textEmailAddress"
+		android:padding="@dimen/acc_et_padding"
+		android:textColor="@color/black"
+		 />
+
+	<TextView
+		android:id="@+id/OneTapReg_UsernamePrompt"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/OneTapReg_EmailAutoComplete"
+		android:text="@string/onetapreg_usernamepromptString"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white" />
+
+	<TextView
+		android:id="@+id/OneTapReg_tapToEdit2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@id/OneTapReg_UsernamePrompt"
+		android:layout_alignParentRight="true"
+		android:layout_marginTop="@dimen/acc_margin_medium"
+		android:text="@string/onetapreg_taptoEdit"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white" />
+
+	<EditText
+		android:id="@+id/OneTapReg_UsernameInputField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/OneTapReg_UsernamePrompt"
+		android:background="@color/white"
+		android:inputType="text"
+		android:padding="@dimen/acc_et_padding"
+		android:textColor="@color/black"
+		 />
+
+	<TextView
+		android:id="@+id/OneTapReg_AltUsernameWarning"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/OneTapReg_UsernameInputField"
+		android:text="@string/onetapreg_AltUsernameWarning"
+		android:textColor="@color/userwarning" />
+
+	<Button
+		android:id="@+id/OneTapReg_btn_SignIn"
+		style="@style/Theme.MiKandi.Button.Transparent"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="@dimen/acc_margin_medium"
+		android:paddingLeft="@dimen/acc_margin_large"
+		android:paddingRight="@dimen/acc_margin_large"
+		android:text="@string/onetapreg_oneTap_Signin" />
+
+	<Button
+		android:id="@+id/OneTapReg_btn_Registration"
+		style="@style/Theme.MiKandi.Button.Green.Account"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/OneTapReg_btn_SignIn"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="@dimen/acc_margin_medium"
+		android:text="@string/onetapreg_buttonString" />
+
+	<!-- TODO: instead of a complex linear layout use a single clickable textview with left and right background drawables! -->
+
+	<LinearLayout
+		android:id="@+id/OneTapReg_Horizontal_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/OneTapReg_btn_Registration"
+		android:orientation="horizontal"
+		android:layout_centerHorizontal="true"
+		android:paddingBottom="@dimen/acc_et_padding"
+		android:layout_marginTop="40dp" >
+
+		<CheckBox
+			android:id="@+id/onetapreg_checkBox1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:checked="true" />
+
+		<TextView
+			android:id="@+id/onetapreg_checkbox_text"
+			android:layout_width="152dp"
+			android:layout_height="42dp"
+			android:text="@string/onetapreg_checkBox_string"
+			android:textColor = "@color/white" />
+
+		<ImageView
+			android:id="@+id/onetapreg_info_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:adjustViewBounds="true"
+			android:contentDescription="@string/img_content_desc"
+			android:maxHeight="20dip"
+			android:maxWidth="20dip"
+			android:scaleType="fitCenter"
+			android:src="@+drawable/ic_help_icon" />
+	</LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mikandi.developertools"
+    android:versionCode="1"
+    android:versionName="1.0.1" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="22" />
+	
+	<!--  get accounts needed to retreive email address for the registration, if registration  
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	-->
+   
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity 
+            android:name = "tools.mikandi.dev.ads.fillScreenActivity"
+            android:label="Full Screen Ad" >            
+        </activity>
+        <activity 
+            android:name = "tools.mikandi.dev.login.LoginActivity"
+            android:label = "Login Activity">
+        </activity>
+        <activity 
+            android:name = "tools.mikandi.dev.passreset.PasswordResetActivity"
+            android:label = "Password Reset Activity">
+	   </activity>
+	    <activity 
+            android:name = "tools.mikandi.dev.emailcheck.EmailCheckActivity"
+            android:label = "Email Check Activity">
+	   </activity>
+	  </application>
+
+</manifest>

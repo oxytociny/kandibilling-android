@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+    
+   	<WebView
+        android:id = "@+id/webview"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+    	android:padding = "0dip"
+    	android:autoLink = "web"
+    	/>
+    
+       <ImageView
+        android:id = "@+id/btn_quit"
+        android:layout_width="48dip"
+        android:layout_height = "48dip" 
+        android:background = "@drawable/ic_close"
+        android:layout_alignRight="@id/webview"
+        android:layout_alignTop = "@id/webview"
+        android:layout_marginRight="12dip"
+        android:layout_marginTop = "12dip"
+         />
+
+</RelativeLayout>

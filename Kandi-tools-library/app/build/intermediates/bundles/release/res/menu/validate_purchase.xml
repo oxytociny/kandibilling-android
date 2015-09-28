@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.kandi_tools_library.Validate_purchase" >
+
+</menu>
+<!-- From: file:/C:/Users/vetruven/Documents/work/Kandi-tools-library/app/src/main/res/menu/validate_purchase.xml -->
